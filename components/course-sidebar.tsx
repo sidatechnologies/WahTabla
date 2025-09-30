@@ -13,6 +13,18 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
@@ -53,6 +65,7 @@ export function CourseSidebar({
   mergedList,
   allVideos,
 }: CourseSidebarProps) {
+  console.log(year.exams)
   const [openModules, setOpenModules] = useState<number[]>([]);
   const [openMonths, setOpenMonths] = useState<number[]>([]);
   const [initialized, setInitialized] = useState(false);
@@ -198,19 +211,19 @@ export function CourseSidebar({
 
                           const analytics = video
                             ? videoData.find(
-                                (v) => v.videoId === video.videoId
-                              )
+                              (v) => v.videoId === video.videoId
+                            )
                             : null;
                           const examAnalytics = hasExam
                             ? videoData.find(
-                                (v) => v.examId === hasExam.examId
-                              )
+                              (v) => v.examId === hasExam.examId
+                            )
                             : null;
                           const isDisabled =
                             !analytics || !analytics.isAvailable;
                           const isGettingWatched = analytics
                             ? analytics.watchProgress >= 0 &&
-                              analytics.watchProgress < 90
+                            analytics.watchProgress < 90
                             : false;
                           const isFullyWatched = analytics
                             ? analytics.watchProgress >= 90
@@ -226,8 +239,8 @@ export function CourseSidebar({
                                 examAnalytics
                                   ? ""
                                   : isDisabled
-                                  ? "relative opacity-50"
-                                  : ""
+                                    ? "relative opacity-50"
+                                    : ""
                               )}
                               onClick={() => {
                                 if (hasExam) {
@@ -290,18 +303,50 @@ export function CourseSidebar({
               </CollapsibleContent>
             </Collapsible>
           ))}
-          <Button
-            variant="destructive"
-            disabled={!allWatched}
-            onClick={() =>
-              router.push(
-                `/exam/final/courses/${courseId}/year/${year.yearId}/week/52`
-              )
-            }
-            className="w-full mt-2"
-          >
-            Final Exam
-          </Button>
+          <Dialog>
+            <form>
+              <DialogTrigger asChild>
+                <Button
+                  variant="destructive"
+                  disabled={!allWatched}
+                  // onClick={() =>
+                  //   router.push(
+                  //     `/exam/final/courses/${courseId}/year/${year.yearId}/week/52`
+                  //   )
+                  // }
+                  className="w-full mt-2"
+                >
+                  Final Exam
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[425px]">
+                <DialogHeader>
+                  <DialogTitle>Edit profile</DialogTitle>
+                  <DialogDescription>
+                    Make changes to your profile here. Click save when you&apos;re
+                    done.
+                  </DialogDescription>
+                </DialogHeader>
+                <div className="grid gap-4">
+                  <div className="grid gap-3">
+                    <Label htmlFor="name-1">Name</Label>
+                    <Input id="name-1" name="name" defaultValue="Pedro Duarte" />
+                  </div>
+                  <div className="grid gap-3">
+                    <Label htmlFor="username-1">Username</Label>
+                    <Input id="username-1" name="username" defaultValue="@peduarte" />
+                  </div>
+                </div>
+                <DialogFooter>
+                  <DialogClose asChild>
+                    <Button variant="outline">Cancel</Button>
+                  </DialogClose>
+                  <Button type="submit">Save changes</Button>
+                </DialogFooter>
+              </DialogContent>
+            </form>
+          </Dialog>
+
         </div>
       </ScrollArea>
       <Link href="/profile" className="absolute bottom-0 left-0 w-full p-4">

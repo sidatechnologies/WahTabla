@@ -77,7 +77,7 @@ export default function Certificate({
         </div>
       </div>
 
-      <Button onClick={handleDownload}>Download</Button>
+      {/* <Button onClick={handleDownload}>Download</Button> */}
     </div>
   );
 }

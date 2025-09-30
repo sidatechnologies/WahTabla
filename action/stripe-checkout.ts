@@ -29,7 +29,7 @@ export const createStripeCheckoutSession = async(courseName: string, plan: strin
     };
 
     try {
-        const response = await fetch(`${base_url}/webhook`, options)
+        const response = await fetch(`${base_url}/createCheckout`, options)
         const data = await response.json()
 
         if (response.status === 200 && data.url) {
