@@ -209,12 +209,12 @@ export function VideoDetails({
                 📅 {selectedWeek} (No Video Available)
               </Button>
               <div className="flex justify-center items-center gap-2 mt-6">
-                {/* <Button
+                <Button
                   onClick={() => openPdf(getTheoryLink(selectedWeek, yearName))}
                   variant="secondary"
                 >
                   View Theory
-                </Button> */}
+                </Button>
                 <Button
                   onClick={() =>
                     openPdf(getThisWeekNoteLink(selectedWeek, yearName))
@@ -262,12 +262,12 @@ export function VideoDetails({
       <div className="w-full flex justify-between items-center mb-4">
         <h1>By Pandit Abhijit Banerjee</h1>
         <div className="flex justify-center items-center gap-2 mt-6">
-          {/* <Button
+          <Button
             onClick={() => openPdf(getTheoryLink(selectedWeek, yearName))}
             variant="secondary"
           >
             View Theory
-          </Button> */}
+          </Button>
           <Button
             onClick={() => openPdf(getThisWeekNoteLink(selectedWeek, yearName))}
             variant="secondary"
