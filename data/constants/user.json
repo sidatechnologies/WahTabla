@@ -1,0 +1,182 @@
+{
+  "user": {
+    "userId": 2,
+    "username": "john2",
+    "email": "john2@example.com",
+    "createdAt": "2025-01-01T16:46:12.993Z",
+    "updatedAt": "2025-01-01T16:46:12.993Z",
+    "profile": {
+      "id": "c8d4b6d1-49ed-44b7-9779-5f6271b2a71f",
+      "firstName": "John",
+      "lastName": "Doe",
+      "dateOfBirth": "1990-01-01",
+      "gender": "Male",
+      "createdAt": "2025-01-01T12:00:00.000Z",
+      "updatedAt": "2025-01-01T12:00:00.000Z"
+    }
+  },
+  "orders": [
+    {
+      "type": "Course",
+      "details": {
+        "courseId": 1,
+        "courseName": "BHUSAN",
+        "vimeoCourseId": "23539493",
+        "years": [
+          {
+            "yearId": 1,
+            "courseId": 1,
+            "vimeoYearId": "23539494",
+            "yearName": "Year 1",
+            "modules": [
+              {
+                "moduleId": 1,
+                "courseId": 1,
+                "yearId": 1,
+                "moduleName": "Module 1",
+                "months": [
+                  {
+                    "monthId": 1,
+                    "courseId": 1,
+                    "yearId": 1,
+                    "vimeoMonthId": "22742366",
+                    "monthName": "Month 1",
+                    "moduleId": 1,
+                    "videos": [
+                      {
+                        "videoId": 1,
+                        "monthId": 1,
+                        "videoVimeoId": "1027696425",
+                        "videoTitle": "Week 3: The 16 Beat Technique",
+                        "videoUrl": "https://vimeo.com/1027696425",
+                        "description": "A crucial pattern for table playing focuses on counting beats to establish a rhythm of 16 beats. Internal counting is emphasized to develop a habit while playing. Relaxation enhances performance, and practicing at a reasonable speed is advised, with gradual increases over time. Consistency in practicing previously learned techniques is also highlighted.",
+                        "duration": 418,
+                        "thumbnailUrl": "https://i.vimeocdn.com/video/1953614517-46b9820425fc9e2148296bfff9cbd9b1a6b367cd97d677d969f2aa932a1ed03a-d_100x75?r=pad"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "moduleId": 2,
+                "courseId": 1,
+                "yearId": 1,
+                "moduleName": "Module 2",
+                "months": []
+              }
+            ]
+          },
+          {
+            "yearId": 2,
+            "courseId": 1,
+            "vimeoYearId": "23540456",
+            "yearName": "Year 2",
+            "modules": [
+              {
+                "moduleId": 5,
+                "courseId": 1,
+                "yearId": 2,
+                "moduleName": "Module 5",
+                "months": [
+                  {
+                    "monthId": 2,
+                    "courseId": 1,
+                    "yearId": 2,
+                    "vimeoMonthId": "23557840",
+                    "monthName": "Month 13",
+                    "moduleId": 5,
+                    "videos": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "Module",
+      "course": {
+        "courseId": 2,
+        "courseName": "BIBHUSAN",
+        "vimeoCourseId": "23551739"
+      },
+      "year": {
+        "yearId": 3,
+        "courseId": 2,
+        "vimeoYearId": "23551740",
+        "yearName": "Year 3"
+      },
+      "details": {
+        "moduleId": 9,
+        "courseId": 2,
+        "yearId": 3,
+        "moduleName": "Module 9",
+        "months": [
+          {
+            "monthId": 14,
+            "courseId": 2,
+            "yearId": 3,
+            "vimeoMonthId": "23557878",
+            "monthName": "Month 25",
+            "moduleId": 9,
+            "videos": []
+          }
+        ]
+      }
+    },
+    {
+      "type": "Month",
+      "course": {
+        "courseId": 3,
+        "courseName": "RATNA",
+        "vimeoCourseId": "23557824"
+      },
+      "year": {
+        "yearId": 6,
+        "courseId": 3,
+        "vimeoYearId": "23557833",
+        "yearName": "Year 6"
+      },
+      "details": {
+        "monthId": 50,
+        "vimeoMonthId": "23557888",
+        "monthName": "Month 61",
+        "moduleId": 21,
+        "videos": []
+      }
+    },
+    {
+      "type": "Year",
+      "course": {
+        "courseId": 3,
+        "courseName": "RATNA",
+        "vimeoCourseId": "23557824"
+      },
+      "details": {
+        "yearId": 7,
+        "courseId": 3,
+        "yearName": "Year 7",
+        "modules": [
+          {
+            "moduleId": 25,
+            "courseId": 3,
+            "yearId": 7,
+            "moduleName": "Module 25",
+            "months": [
+              {
+                "monthId": 62,
+                "courseId": 3,
+                "yearId": 7,
+                "vimeoMonthId": "23557890",
+                "monthName": "Month 73",
+                "moduleId": 25,
+                "videos": []
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
