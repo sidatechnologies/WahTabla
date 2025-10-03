@@ -11,9 +11,13 @@ import { Button } from "./ui/button";
 import { ArrowLeftIcon } from "@radix-ui/react-icons";
 import { useRouter } from "next/navigation";
 import { useFullProfileDetails } from "@/data/get-full-profile";
+import { useLastPurchaseDetails } from "@/data/get-last-purchase";
+
+
 
 const BuyCourse = () => {
   const { data: userCourses } = useFullProfileDetails();
+  const { data: userLastPurchase } = useLastPurchaseDetails();
   const [selectedCourse, setSelectedCourse] = useState<CoursesType>(courses[0]);
   const router = useRouter();
 
@@ -36,17 +40,22 @@ const BuyCourse = () => {
     // Flatten all exams from all years
     const allExams = purchasedCourse.years.flatMap((year: any) => year.exams ?? []);
 
+    if (allExams.length === 0) return false; // no exams at all
+
     // Get final exams
     const finalExams = allExams.filter((exam: any) => exam.type === "final");
 
-    if (finalExams.length === 0) return true;
+    if (finalExams.length === 0) return false; // no final exams → course not complete
 
     // Check if all final exams are passed
-    return finalExams.every((exam: any) => {
+    const allFinalsPassed = finalExams.every((exam: any) => {
       const lastAttempt = exam.attempts?.[exam.attempts.length - 1];
       return lastAttempt?.passed === true;
     });
+
+    return allFinalsPassed;
   };
+
 
 
   // Check if next course is available (all previous courses completed)
@@ -107,7 +116,7 @@ const BuyCourse = () => {
         </div>
       </div>
       <div>
-        <BuyingOptionsNew course={selectedCourse} />
+        <BuyingOptionsNew course={selectedCourse} userLastPurchase={userLastPurchase} />
       </div>
     </div>
   );

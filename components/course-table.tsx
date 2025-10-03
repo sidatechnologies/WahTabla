@@ -18,9 +18,9 @@ export default function CoursesPills({ data }: { data: ParsedResponse }) {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 w-full">
       {Object.entries(data).map(([courseId, course]) => (
-        <div key={courseId} className="p-3 space-y-4 bg-gradient-to-r from-white-200 to-blue-300 transition-colors duration-300 rounded-lg shadow-xl border">
+        <div key={courseId} className="w-full p-3 space-y-4 bg-gradient-to-r from-white-200 to-blue-300 transition-colors duration-300 rounded-lg shadow-xl border bg-muted">
           {/* Course Name */}
           <h2 className="text-xl font-bold tracking-tight">
             DHWANI {course.courseName}

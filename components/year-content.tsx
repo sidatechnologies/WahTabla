@@ -69,7 +69,7 @@ export function YearContent({ year, courseId, videoData, setVideoData, yearId }:
 
   // Filter and sort exams
   const allExams = Array.from(
-    new Map(year.exams.map(e => [e.weekNumber, { ...e, isExam: true }])).values()
+    new Map(year.exams?.map(e => [e.weekNumber, { ...e, isExam: true }])).values()
   );
 
   // Merge videos and exams

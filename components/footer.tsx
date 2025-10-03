@@ -35,7 +35,7 @@ const Footer = () => {
               height={0}
               className="w-4"
             />
-            <span>onlineclasses@dhwaniacademy.org</span>
+            <span>wahhtabla@gmail.com</span>
           </span>
           {/* <span className='flex justify-start items-center gap-2'>
             <Image

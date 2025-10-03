@@ -34,9 +34,9 @@ const ProfileModuleList = () => {
   return (
     <div className="min-w-[600px] w-full min-h-[92vh] bg-white rounded-lg flex justify-start items-start p-4 shadow-sm">
       {courses?.data ? (
-        <div className="w-full h-full flex flex-col justify-start items-start gap-8 p-2 bg-muted rounded-lg">
-          <div className="w-full flex justify-between items-center px-4 pt-4">
-            <span className="text-2xl font-semibold">
+        <div className="w-full h-full flex flex-col justify-start items-start gap-8 rounded-lg py-1">
+          <div className="w-full flex justify-between items-center">
+            <span className="text-2xl text-left font-semibold">
               Your Courses({Object.keys(courses?.data).length})
             </span>
             {/* <Button

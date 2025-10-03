@@ -8,14 +8,97 @@ import Link from "next/link";
 import { pricing } from "@/data/constants/pricing-checkout";
 import { createStripeCheckoutSession } from "@/action/stripe-checkout";
 
-type propsType = {
+type course = {
   id: number;
   name: string;
   lengthInYears: number;
 };
 
-const BuyingOptionsNew = ({ course }: { course: propsType }) => {
+type propsType = {
+  course: course,
+  userLastPurchase: any
+}
+
+interface OrderItem {
+  itemType: "Month" | "Module" | "Year" | "Course";
+  itemName: string; // like "Month 1", "Module 2"
+}
+
+interface Order {
+  orderId: number;
+  orderItems: OrderItem[];
+  // other fields not needed here
+}
+
+export function getNextIndices(orders?: Order[]) {
+  if (!orders || orders.length === 0) {
+    return {
+      nextMonth: 1,
+      nextModule: 1,
+      nextYear: 1,
+      hasCourse: false,
+    };
+  }
+
+  let maxMonth = 0;
+  let maxModule = 0;
+  let maxYear = 0;
+  let hasCourse = false;
+
+  orders.forEach((order) => {
+    order.orderItems?.forEach((item) => {
+      if (item.itemType === "Month") {
+        const match = item.itemName.match(/Month (\d+)/);
+        if (match) maxMonth = Math.max(maxMonth, parseInt(match[1], 10));
+      }
+
+      if (item.itemType === "Module") {
+        const match = item.itemName.match(/Module (\d+)/);
+        if (match) maxModule = Math.max(maxModule, parseInt(match[1], 10));
+      }
+
+      if (item.itemType === "Year") {
+        const match = item.itemName.match(/Year (\d+)/);
+        if (match) maxYear = Math.max(maxYear, parseInt(match[1], 10));
+      }
+
+      if (item.itemType === "Course") {
+        hasCourse = true;
+      }
+    });
+  });
+
+  return {
+    nextMonth: maxMonth > 0 ? maxMonth + 1 : 1,
+    nextModule: maxModule > 0 ? maxModule + 1 : 1,
+    nextYear: maxYear > 0 ? maxYear + 1 : 1,
+    hasCourse,
+  };
+}
+
+
+
+const BuyingOptionsNew = ({ course, userLastPurchase }: propsType) => {
   const [country, setCountry] = useState<string>("DEFAULT");
+  const [nextIndices, setNextIndices] = useState({
+    nextMonth: 1,
+    nextModule: 1,
+    nextYear: 1,
+    hasCourse: false,
+  });
+
+  useEffect(() => {
+    if (userLastPurchase?.data) {
+      const nextIndices = getNextIndices(userLastPurchase.data)
+      console.log({ nextIndices })
+      setNextIndices(getNextIndices(userLastPurchase.data));
+    }
+  }, [userLastPurchase]);
+  // const nextIndices = getNextIndices(userLastPurchase?.data);
+
+  // console.log(nextIndices);
+  // { nextMonth: 4, nextModule: 1, nextYear: 1, hasCourse: false }
+
 
   useEffect(() => {
     const fetchLocation = async () => {
@@ -64,7 +147,7 @@ const BuyingOptionsNew = ({ course }: { course: propsType }) => {
       <Label>Choose Options</Label>
       <Card className="w-full bg-transparent shadow-none border-none mt-6">
         <CardContent className="px-0">
-          <div className="w-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 justify-items-center gap-x-4 gap-y-6">
+          <div className="w-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 justify-items-center gap-x-4 gap-y-6">
             {coursePricing?.priceModule.map((priceModel, index) => {
               return (
                 <Card
@@ -94,11 +177,28 @@ const BuyingOptionsNew = ({ course }: { course: propsType }) => {
                     </span>
                   )}
                   <CardHeader className="flex justify-start items-center gap-4">
-                    <Button className="bg-primary w-32 rounded-sm cursor-default shadow-none text-2xl text-wrap font-semibold uppercase">
-                      {/* {priceModel.name} */}
+                    <Button
+                      className="flex flex-col bg-primary w-32 rounded-sm cursor-default shadow-none text-xl text-wrap font-semibold uppercase"
+                      disabled={
+                        (priceModel.type === "Year" && nextIndices.nextYear > 1) ||
+                        (priceModel.type === "Course" && nextIndices.hasCourse === true)
+                      }
+                    >
+                      {/* Display billedType */}
                       {priceModel.billedType}
+
+                      {/* Show plan dynamically */}
+                      {priceModel.billedType !== "Full Course" && (
+                        <span className="text-xs">
+                          (
+                          {priceModel.type === "Month" && `Month ${nextIndices.nextMonth}`}
+                          {priceModel.type === "Module" && `Module ${nextIndices.nextModule}`}
+                          {priceModel.type === "Year" && `Year ${nextIndices.nextYear}`})
+                        </span>
+                      )}
                     </Button>
                   </CardHeader>
+
                   <CardContent>
                     <div className="flex flex-col justify-center items-center gap-2">
                       {priceModel.originalPrice && priceModel.save && (
@@ -129,21 +229,36 @@ const BuyingOptionsNew = ({ course }: { course: propsType }) => {
                     </div>
                   </CardContent>
                   <CardFooter>
-                    <Link href="/buy-course" className="w-full">
-                      <Button
-                        onClick={() =>
-                          handleCheckout(
-                            course.name,
-                            priceModel.plan,
-                            priceModel.amount,
-                            priceModel.type
-                          )
+                    <Button
+                      disabled={
+                        (priceModel.type === "Year" && nextIndices.nextYear > 1) ||
+                        (priceModel.type === "Course" && nextIndices.hasCourse === true)
+                      }
+                      onClick={() => {
+                        let planLabel = priceModel.plan;
+
+                        if (priceModel.type === "Month") {
+                          planLabel = `${priceModel.type} ${nextIndices.nextMonth}`;
+                        } else if (priceModel.type === "Module") {
+                          planLabel = `${priceModel.type} ${nextIndices.nextModule}`;
+                        } else if (priceModel.type === "Year") {
+                          planLabel = `${priceModel.type} ${nextIndices.nextYear}`;
                         }
-                        className="w-full bg-white text-primary hover:bg-muted"
-                      >
-                        Join Now
-                      </Button>
-                    </Link>
+                        // Course remains as-is
+
+                        handleCheckout(
+                          course.name,
+                          planLabel,          // dynamic based on next index
+                          priceModel.amount,
+                          priceModel.type
+                        );
+                      }}
+                      className="w-full bg-white text-primary hover:bg-muted"
+                    >
+                      Join Now
+                    </Button>
+
+
                   </CardFooter>
                 </Card>
               );
