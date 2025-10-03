@@ -8,7 +8,17 @@ import { Button } from "./ui/button";
 import { Lock } from "lucide-react";
 import { useSubmitVideoAnalytics } from "@/data/get-video-analytics";
 import { useRouter } from "next/navigation";
-
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { ExamTable } from "./exam-table";
 
 
 type YearContentProps = {
@@ -29,6 +39,22 @@ export function YearContent({ year, courseId, videoData, setVideoData, yearId }:
   const [selectedVideoIndex, setSelectedVideoIndex] = useState<number>(0);
   const [selectedWeek, setSelectedWeek] = useState<string>("");
 
+  const [available, setAvailable] = useState(false)
+
+  useEffect(() => {
+    if (!year.exams || year.exams.length === 0) {
+      setAvailable(false)
+      return
+    }
+
+    // Check if all exams have at least one attempt passed
+    const allPassed = year.exams.every((exam) => {
+      const lastAttempt = (exam as any).attempts?.[(exam as any).attempts.length - 1]
+      return lastAttempt?.passed === true
+    })
+
+    setAvailable(allPassed)
+  }, [year.exams])
 
   const getWeekNumber = (title: string) => {
     const match = title.match(/\d+/);
@@ -506,27 +532,50 @@ export function YearContent({ year, courseId, videoData, setVideoData, yearId }:
               Previous
             </Button>
             {
-              hasFinalAfter ? <Button
-                onClick={() =>
-                  router.push(
-                    `/exam/final/courses/${courseId}/year/${year.yearId}/week/52`
-                  )
-                }
-                disabled={!hasFinalAfter}
-                variant={'destructive'}
-              >
-                Final Exam
-              </Button> : <Button
-                onClick={handleNextVideo}
-                disabled={!canGoNext || hasFinalAfter}
-              >
-                Next
-              </Button>
+              hasFinalAfter ?
+                <Dialog>
+                  <form>
+                    <DialogTrigger asChild>
+                      <Button
+                        variant="destructive"
+                        disabled={!canGoNext}
+                      >
+                        Final Exam
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-[550px]">
+                      <DialogHeader>
+                        <DialogTitle>Exam Overview</DialogTitle>
+                        <DialogDescription>
+                          Here’s a list of all your assessments for this term
+                        </DialogDescription>
+                      </DialogHeader>
+                      <ExamTable data={year.exams} courseId={courseId} yearId={year.yearId} />
+                      <DialogFooter>
+                        <DialogClose asChild>
+                          <Button variant="outline">Cancel</Button>
+                        </DialogClose>
+                        <Button type="submit" onClick={() =>
+                          router.push(
+                            `/exam/final/courses/${courseId}/year/${year.yearId}/week/52`
+                          )
+                        } disabled={!available}>
+                          Final Exam</Button>
+                      </DialogFooter>
+                    </DialogContent>
+                  </form>
+                </Dialog> : <Button
+                  onClick={handleNextVideo}
+                  disabled={!canGoNext || hasFinalAfter}
+                >
+                  Next
+                </Button>
             }
 
           </div>
-        )}
-      </main>
-    </div>
+        )
+        }
+      </main >
+    </div >
   );
 }

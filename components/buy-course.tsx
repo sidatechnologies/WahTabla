@@ -10,45 +10,97 @@ import { courses, CoursesType } from "@/data/constants/courses";
 import { Button } from "./ui/button";
 import { ArrowLeftIcon } from "@radix-ui/react-icons";
 import { useRouter } from "next/navigation";
+import { useFullProfileDetails } from "@/data/get-full-profile";
 
 const BuyCourse = () => {
+  const { data: userCourses } = useFullProfileDetails();
   const [selectedCourse, setSelectedCourse] = useState<CoursesType>(courses[0]);
-  const router = useRouter()
+  const router = useRouter();
 
   const handleSelectingCourse = (course: CoursesType) => {
     setSelectedCourse(course);
   };
+
+  // Function to check if all final exams of a course are passed
+  const isCourseCompleted = (courseName: string) => {
+    if (!userCourses?.data) return false;
+
+    const purchasedCoursesArray = Object.values(userCourses.data);
+
+    const purchasedCourse = purchasedCoursesArray.find(
+      (c: any) => c.courseName === courseName
+    );
+
+    if (!purchasedCourse) return false;
+
+    // Flatten all exams from all years
+    const allExams = purchasedCourse.years.flatMap((year: any) => year.exams ?? []);
+
+    // Get final exams
+    const finalExams = allExams.filter((exam: any) => exam.type === "final");
+
+    if (finalExams.length === 0) return true;
+
+    // Check if all final exams are passed
+    return finalExams.every((exam: any) => {
+      const lastAttempt = exam.attempts?.[exam.attempts.length - 1];
+      return lastAttempt?.passed === true;
+    });
+  };
+
+
+  // Check if next course is available (all previous courses completed)
+  const isCourseAvailable = (index: number) => {
+    if (index === 0) return true; // first course always available
+    // previous course
+    const previousCourse = courses[index - 1];
+    return isCourseCompleted(previousCourse.name);
+  };
+
   return (
-    <div className="w-full">
+    <div className="w-full p-5 ml-2 bg-white rounded-md h-full">
       <div className="w-full flex justify-center items-center gap-6">
         <div className="w-full flex flex-col justify-start items-start gap-2 py-10 pt-6">
-          <Button variant="secondary" size="icon" className="rounded-full mb-6" onClick={() => router.back()}>
+          {/* <Button
+            variant="secondary"
+            size="icon"
+            className="rounded-full mb-6"
+            onClick={() => router.back()}
+          >
             <ArrowLeftIcon />
-          </Button>
+          </Button> */}
           <Label>Select Course</Label>
           <RadioGroup
             value={selectedCourse.name}
             className="flex flex-wrap justify-start items-start gap-6"
           >
             {courses.map((course, index) => {
+              const available = isCourseAvailable(index);
               return (
-                <Card
-                  key={index}
-                  className={cn(
-                    "rounded-md px-6 py-3 cursor-pointer",
-                    selectedCourse.name === course.name
-                      ? "border border-blue-500"
-                      : ""
+                <div key={index} className="flex flex-col gap-1">
+                  <Card
+                    className={cn(
+                      "rounded-md px-6 py-3 cursor-pointer",
+                      selectedCourse.name === course.name
+                        ? "border border-blue-500"
+                        : "",
+                      !available ? "opacity-50 cursor-not-allowed" : ""
+                    )}
+                    onClick={() => available && handleSelectingCourse(course)}
+                  >
+                    <CardContent className="flex justify-center items-center gap-4 py-2">
+                      <RadioGroupItem value={course.name} id={course.name} />
+                      <Label className="text-lg font-semibold cursor-pointer select-none">
+                        Dhwani {course.name}
+                      </Label>
+                    </CardContent>
+                  </Card>
+                  {!available && (
+                    <span className="text-xs text-red-500">
+                      Finish the previous course before purchasing this one.
+                    </span>
                   )}
-                  onClick={() => handleSelectingCourse(course)}
-                >
-                  <CardContent className="flex justify-center items-center gap-4 py-2">
-                    <RadioGroupItem value={course.name} id={course.name} />
-                    <Label className="text-lg font-semibold cursor-pointer select-none">
-                      Dhwani {course.name}
-                    </Label>
-                  </CardContent>
-                </Card>
+                </div>
               );
             })}
           </RadioGroup>

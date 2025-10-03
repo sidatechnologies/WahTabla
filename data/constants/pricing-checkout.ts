@@ -39,18 +39,6 @@ export const pricing = [
         billedType: 'Yearly',
       },
       {
-        name: 'Dhwani Bhusan Year 2',
-        plan: 'Year 2',
-        type: 'Year',
-        amount: 120000,
-        priceDefault: '$1200',
-        priceIn: 'Rs. 1200',
-        billedAs: 'Billed Yearly',
-        originalPrice: 1440,
-        save: 240,
-        billedType: 'Yearly',
-      },
-      {
         name: 'Dhwani Bhusan Full Course',
         plan: 'Full Course',
         type: 'Course',

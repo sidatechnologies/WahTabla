@@ -33,6 +33,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Year, Video, VideoAnalytics } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { ExamTable } from "./exam-table";
 import { useRouter } from "next/navigation";
 
 type CourseSidebarProps = {
@@ -65,7 +66,6 @@ export function CourseSidebar({
   mergedList,
   allVideos,
 }: CourseSidebarProps) {
-  console.log(year.exams)
   const [openModules, setOpenModules] = useState<number[]>([]);
   const [openMonths, setOpenMonths] = useState<number[]>([]);
   const [initialized, setInitialized] = useState(false);
@@ -76,6 +76,24 @@ export function CourseSidebar({
       analytics?.watchProgress !== undefined && analytics.watchProgress >= 90
     );
   });
+
+  const [available, setAvailable] = useState(false)
+
+  useEffect(() => {
+    if (!year.exams || year.exams.length === 0) {
+      setAvailable(false)
+      return
+    }
+
+    // Check if all exams have at least one attempt passed
+    const allPassed = year.exams.every((exam) => {
+      const lastAttempt = (exam as any).attempts?.[(exam as any).attempts.length - 1]
+      return lastAttempt?.passed === true
+    })
+
+    setAvailable(allPassed)
+  }, [year.exams])
+
 
   useEffect(() => {
     if (!selectedWeek || initialized) return;
@@ -309,51 +327,41 @@ export function CourseSidebar({
                 <Button
                   variant="destructive"
                   disabled={!allWatched}
-                  // onClick={() =>
-                  //   router.push(
-                  //     `/exam/final/courses/${courseId}/year/${year.yearId}/week/52`
-                  //   )
-                  // }
                   className="w-full mt-2"
                 >
                   Final Exam
                 </Button>
               </DialogTrigger>
-              <DialogContent className="sm:max-w-[425px]">
+              <DialogContent className="sm:max-w-[550px]">
                 <DialogHeader>
-                  <DialogTitle>Edit profile</DialogTitle>
+                  <DialogTitle>Exam Overview</DialogTitle>
                   <DialogDescription>
-                    Make changes to your profile here. Click save when you&apos;re
-                    done.
+                    Here’s a list of all your assessments for this term
                   </DialogDescription>
                 </DialogHeader>
-                <div className="grid gap-4">
-                  <div className="grid gap-3">
-                    <Label htmlFor="name-1">Name</Label>
-                    <Input id="name-1" name="name" defaultValue="Pedro Duarte" />
-                  </div>
-                  <div className="grid gap-3">
-                    <Label htmlFor="username-1">Username</Label>
-                    <Input id="username-1" name="username" defaultValue="@peduarte" />
-                  </div>
-                </div>
+                <ExamTable data={year.exams} courseId={courseId} yearId={year.yearId} />
                 <DialogFooter>
                   <DialogClose asChild>
                     <Button variant="outline">Cancel</Button>
                   </DialogClose>
-                  <Button type="submit">Save changes</Button>
+                  <Button type="submit" onClick={() =>
+                    router.push(
+                      `/exam/final/courses/${courseId}/year/${year.yearId}/week/52`
+                    )
+                  } disabled={!available}>
+                    Final Exam</Button>
                 </DialogFooter>
               </DialogContent>
             </form>
           </Dialog>
 
         </div>
-      </ScrollArea>
+      </ScrollArea >
       <Link href="/profile" className="absolute bottom-0 left-0 w-full p-4">
         <Button variant="outline" className="w-full bg-white">
           Profile
         </Button>
       </Link>
-    </div>
+    </div >
   );
 }

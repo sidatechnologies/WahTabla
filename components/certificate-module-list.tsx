@@ -49,28 +49,7 @@ type ErrorResponse = {
 type ApiResponse = SuccessResponse | ErrorResponse;
 
 const CertificateModuleList = () => {
-    const [responseData, setResponseData] = useState()
-
     const { data: courses, isError, error, isPending } = useFullProfileDetails();
-    function getFilteredCourses(response?: SuccessResponse) {
-        if (!response?.data) return [];
-
-        return Object.values(response.data) // convert object { "1": {...}, "2": {...} } -> array
-            .map(course => {
-                const finalExams = course.exams.filter(
-                    exam =>
-                        exam.type === "final" &&
-                        exam.attempts?.some(attempt => attempt.passed === true)
-                );
-
-                return {
-                    courseName: course.courseName,
-                    exams: finalExams
-                };
-            })
-            .filter(course => course.exams.length > 0);
-    }
-
 
 
     if (isError || error) {
@@ -95,9 +74,6 @@ const CertificateModuleList = () => {
     }
 
     const safeCourses = courses as unknown as SuccessResponse
-    if (courses.success) {
-        const filteredCourses = getFilteredCourses(safeCourses);
-    }
 
     return (
         <div className="min-w-[600px] w-full min-h-[92vh] bg-white rounded-lg flex justify-start items-start p-4 shadow-sm">
