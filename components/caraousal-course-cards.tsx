@@ -1,14 +1,5 @@
 "use client";
 
-import Autoplay from "embla-carousel-autoplay";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
-
 import Image from "next/image";
 import {
   Card,
@@ -20,45 +11,25 @@ import {
 import { Badge } from "./ui/badge";
 import Link from "next/link";
 import { Button } from "./ui/button";
-import { useRef } from "react";
 
 const CaraousalCourseCard = () => {
-  const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: false }));
-
   return (
     <Card
       id="module"
       className="w-full bg-transparent shadow-none border-none mt-6"
     >
-      <Carousel
-        plugins={[plugin.current]}
-        className="w-full"
-        opts={{
-          align: "start",
-          loop: true,
-        }}
-        onMouseEnter={plugin.current.stop}
-        onMouseLeave={plugin.current.reset}
-      >
-        <CardHeader className="px-0 w-full flex flex-row justify-between items-start gap-2">
-          <CardTitle className="text-2xl">Course Modules</CardTitle>
-          <div className="w-20 flex justify-start items-start gap-4">
-            <CarouselPrevious className="relative -left-1/2 bg-white" />
-            <CarouselNext className="relative -left-1/2 bg-white" />
-          </div>
-        </CardHeader>
-        <CarouselContent className="w-full">
-          <CarouselItem className="w-full">
-            <DhwaniBhusanCourse />
-          </CarouselItem>
-          <CarouselItem className="w-full">
-            <DhwaniBibhusanCourse />
-          </CarouselItem>
-          <CarouselItem className="w-full">
-            <DhwaniRatnaCourse />
-          </CarouselItem>
-        </CarouselContent>
-      </Carousel>
+      <CardHeader className="px-0 w-full flex flex-row justify-between items-start gap-2">
+        <CardTitle className="text-2xl">Course Modules</CardTitle>
+      </CardHeader>
+
+      {/* Responsive grid layout replacing carousel */}
+      <CardContent className="px-0">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <DhwaniBhusanCourse />
+          <DhwaniBibhusanCourse />
+          <DhwaniRatnaCourse />
+        </div>
+      </CardContent>
     </Card>
   );
 };
@@ -67,9 +38,9 @@ export default CaraousalCourseCard;
 
 const DhwaniBhusanCourse = () => {
   return (
-    <CardContent className="px-0">
-      <div className="grid grid-cols-1 gap-10 sm:gap-6 md:gap-10 desktop:gap-x-10 desktop:gap-y-10">
-        <div className="flex flex-col lg:flex-row justify-start items-start lg:items-center gap-4 bg-primary p-4 rounded-lg shadow-sm">
+    <Card className="h-full bg-transparent border-none shadow-none w-full py-0">
+      <CardContent className="px-0">
+        <div className="flex flex-col justify-start items-start gap-4 bg-primary p-4 rounded-lg shadow-sm">
           <Card className="h-full bg-transparent border-none shadow-none w-full py-0">
             <CardHeader className="flex justify-center items-center">
               <Image
@@ -81,11 +52,12 @@ const DhwaniBhusanCourse = () => {
               />
             </CardHeader>
             <CardContent className="py-0 text-white">
-              <div className="w-full flex flex-col sm:flex-col lg:flex-row justify-between items-start sm:items-start lg:items-center gap-4">
-                <div className="flex justify-start items-start sm:items-center gap-2">
+              <div className="w-full flex flex-col gap-2">
+                {/* Badges row */}
+                <div className="flex flex-wrap items-center gap-2">
                   <Badge
                     variant="outline"
-                    className="w-full flex py-2 px-4 bg-white text-primary"
+                    className="flex py-2 px-4 bg-white text-primary"
                   >
                     1st & 2nd Year
                   </Badge>
@@ -96,14 +68,18 @@ const DhwaniBhusanCourse = () => {
                     Beginners
                   </Badge>
                 </div>
+
+                {/* Instructor name below badges */}
                 <span className="text-sm tablet:text-base desktop:text-lg">
                   By Pandit Abhijit Banerjee
                 </span>
               </div>
-              <CardHeader className="px-0">
+
+              <CardHeader className="px-0 mt-2">
                 <CardTitle className="text-xl">Dhwani Bhusan</CardTitle>
               </CardHeader>
             </CardContent>
+
             <CardFooter>
               <Link href="/profile" className="w-full">
                 <Button variant="secondary" className="w-full">
@@ -112,7 +88,9 @@ const DhwaniBhusanCourse = () => {
               </Link>
             </CardFooter>
           </Card>
-          <div className="w-full h-full flex flex-col justify-start items-start text-white gap-2 px-4 lg:pl-0 py-4">
+
+          {/* About the Course section */}
+          <div className="w-full flex flex-col justify-start items-start text-white gap-2 py-4 -mx-4 px-4">
             <h1 className="text-3xl font-semibold">About the Course</h1>
             <ul className="list-disc list-inside text-base">
               <span className="text-lg font-medium">Course Description</span>
@@ -137,7 +115,7 @@ const DhwaniBhusanCourse = () => {
                 coordination, strength, and precision.
               </li>
               <span className="text-lg font-medium">Learning Outcomes </span>
-              <br></br>
+              <br />
               <li className="pl-4 font-medium">
                 Be familiar with the basics of Tabla playing.
               </li>
@@ -149,16 +127,16 @@ const DhwaniBhusanCourse = () => {
             </ul>
           </div>
         </div>
-      </div>
-    </CardContent>
+      </CardContent>
+    </Card>
   );
 };
 
 const DhwaniBibhusanCourse = () => {
   return (
-    <CardContent className="px-0">
-      <div className="grid grid-cols-1 gap-10 sm:gap-6 md:gap-10 desktop:gap-x-10 desktop:gap-y-10">
-        <div className="flex flex-col lg:flex-row justify-start items-start lg:items-center gap-4 bg-primary p-4 rounded-lg shadow-sm">
+    <Card className="h-full bg-transparent border-none shadow-none w-full py-0">
+      <CardContent className="px-0">
+        <div className="flex flex-col justify-start items-start gap-4 bg-primary p-4 rounded-lg shadow-sm">
           <Card className="h-full bg-transparent border-none shadow-none w-full py-0">
             <CardHeader className="flex justify-center items-center">
               <Image
@@ -170,8 +148,9 @@ const DhwaniBibhusanCourse = () => {
               />
             </CardHeader>
             <CardContent className="py-0 text-white">
-              <div className="w-full flex flex-col sm:flex-col lg:flex-row justify-between items-start sm:items-start lg:items-center gap-4">
-                <div className="flex justify-start items-start sm:items-center gap-2">
+              <div className="w-full flex flex-col gap-2">
+                {/* Badges row */}
+                <div className="flex flex-wrap items-center gap-2">
                   <Badge
                     variant="outline"
                     className="py-2 px-4 bg-white text-primary"
@@ -185,14 +164,18 @@ const DhwaniBibhusanCourse = () => {
                     Intermediate
                   </Badge>
                 </div>
+
+                {/* Instructor name below badges */}
                 <span className="text-sm tablet:text-base desktop:text-lg">
                   By Pandit Abhijit Banerjee
                 </span>
               </div>
-              <CardHeader className="px-0">
-                <CardTitle className="text-xl up">Dhwani Bibhusan</CardTitle>
+
+              <CardHeader className="px-0 mt-2">
+                <CardTitle className="text-xl">Dhwani Bibhusan</CardTitle>
               </CardHeader>
             </CardContent>
+
             <CardFooter>
               <Link href="/profile" className="w-full">
                 <Button variant="secondary" className="w-full">
@@ -201,7 +184,9 @@ const DhwaniBibhusanCourse = () => {
               </Link>
             </CardFooter>
           </Card>
-          <div className="w-full h-full flex flex-col justify-start items-start text-white gap-2 px-4 lg:pl-0 py-4">
+
+          {/* About the Course section */}
+          <div className="w-full flex flex-col justify-start items-start text-white gap-2 py-4 -mx-4 px-4">
             <h1 className="text-3xl font-semibold">About the Course</h1>
             <ul className="list-disc list-inside text-base">
               <span className="text-lg font-medium">Course Description</span>
@@ -210,12 +195,8 @@ const DhwaniBibhusanCourse = () => {
               </li>
               <li className="pl-4">
                 Talas details: Roopak (7 beats), Keharwa (8 Beats),Matta Tala(9
-                beats), jhap tala( 10 Beats), Chartal ki sawari (11 beats) ektal
+                beats), jhap tala(10 Beats), Chartal ki sawari (11 beats) ektal
                 (12 beats), Ada Chawtala (14 beats), teen tala, compositions.
-              </li>
-              <li className="pl-4">
-                Different types of traditional compositions. e.g. chakradhar
-                tukda and gat.
               </li>
               <li className="pl-4">
                 Different types of traditional compositions. e.g. chakradhar
@@ -226,7 +207,7 @@ const DhwaniBibhusanCourse = () => {
                 improvisation)
               </li>
               <span className="text-lg font-medium">Learning Outcomes </span>
-              <br></br>
+              <br />
               <li className="pl-4 font-medium">
                 Be familiar with different talas and its subtle nuances.
               </li>
@@ -237,23 +218,19 @@ const DhwaniBibhusanCourse = () => {
                 Learn the Subject with its theoretical implications, its
                 cultural background and history.
               </li>
-              <li className="pl-4">
-                Learn the Subject with its theoretical implications, its
-                cultural background and history.
-              </li>
             </ul>
           </div>
         </div>
-      </div>
-    </CardContent>
+      </CardContent>
+    </Card>
   );
 };
 
 const DhwaniRatnaCourse = () => {
   return (
-    <CardContent className="px-0">
-      <div className="grid grid-cols-1 gap-10 sm:gap-6 md:gap-10 desktop:gap-x-10 desktop:gap-y-10">
-        <div className="flex flex-col lg:flex-row justify-start items-start lg:items-center gap-4 bg-primary p-4 rounded-lg shadow-sm">
+    <Card className="h-full bg-transparent border-none shadow-none w-full py-0">
+      <CardContent className="px-0">
+        <div className="flex flex-col justify-start items-start gap-4 bg-primary p-4 rounded-lg shadow-sm">
           <Card className="h-full bg-transparent border-none shadow-none w-full py-0">
             <CardHeader className="flex justify-center items-center">
               <Image
@@ -265,8 +242,9 @@ const DhwaniRatnaCourse = () => {
               />
             </CardHeader>
             <CardContent className="py-0 text-white">
-              <div className="w-full flex flex-col sm:flex-col lg:flex-row justify-between items-start sm:items-start lg:items-center gap-4">
-                <div className="flex justify-start items-start sm:items-center gap-2">
+              <div className="w-full flex flex-col gap-2">
+                {/* Badges row */}
+                <div className="flex flex-wrap items-center gap-2">
                   <Badge
                     variant="outline"
                     className="py-2 px-4 bg-white text-primary"
@@ -280,14 +258,18 @@ const DhwaniRatnaCourse = () => {
                     Advanced
                   </Badge>
                 </div>
+
+                {/* Instructor name below badges */}
                 <span className="text-sm tablet:text-base desktop:text-lg">
                   By Pandit Abhijit Banerjee
                 </span>
               </div>
-              <CardHeader className="px-0">
-                <CardTitle className="text-xl up">Dhwani Ratna</CardTitle>
+
+              <CardHeader className="px-0 mt-2">
+                <CardTitle className="text-xl">Dhwani Ratna</CardTitle>
               </CardHeader>
             </CardContent>
+
             <CardFooter>
               <Link href="/profile" className="w-full">
                 <Button variant="secondary" className="w-full">
@@ -296,45 +278,45 @@ const DhwaniRatnaCourse = () => {
               </Link>
             </CardFooter>
           </Card>
-          <div className="w-full h-full flex flex-col justify-start items-start text-white gap-2 px-4 lg:pl-0 py-4">
+
+          {/* About the Course section */}
+          <div className="w-full flex flex-col justify-start items-start text-white gap-2 py-4 -mx-4 px-4">
             <h1 className="text-3xl font-semibold">About the Course</h1>
-              <span>AVAILABLE ONLY CLASSES ONLINE OR IN-PERSON.</span>
+            <span>AVAILABLE ONLY CLASSES ONLINE OR IN-PERSON.</span>
             <ul className="list-disc list-inside text-base">
               <span className="text-lg font-medium">Course Description</span>
               <li className="pl-4">
                 Detailed study with practice of different Talas
               </li>
+              <li className="pl-4">Rhythmic Variations</li>
               <li className="pl-4">
-                Rhythmic Variations
+                Learning of subtilities of different Gharanas (style)
               </li>
               <li className="pl-4">
-                Learning of subtilities of different Gharanas( style) 
+                In-depth study on accompaniment with different styles of Indian
+                classical and other genres of music.
               </li>
               <li className="pl-4">
-                In-depth study on accompaniment with different styles of Indian classical and other genres of music.
+                In-depth practice of improvisation and Tehais and other Talas
+                e.g. DHAMAR (14 beats), Joy Tala (13 beats), Chowtala (12 beats)
               </li>
-              <li className="pl-4">
-                In-depth practice of improvisation and Tehais and other Talas e.g. DHAMAR (14 beats), Joy Tala (13 beats) , Chowtala( 12 beats)
-              </li>
-              <span className="text-lg font-medium">Learning Outcomes </span>
-              <br></br>
+              <span className="text-lg font-medium">Learning Outcomes</span>
+              <br />
               <li className="pl-4 font-medium">
                 Teach under Dhwani’s numerous outlets
               </li>
-              <li className="pl-4">
-                Be a Master of this Art
-              </li>
+              <li className="pl-4">Be a Master of this Art</li>
               <li className="pl-4">
                 Play like a professional musician’s standard
               </li>
               <li className="pl-4">
-                Get concerts from Dhwani events depending on availability and workshops.  
+                Get concerts from Dhwani events depending on availability and
+                workshops.
               </li>
             </ul>
           </div>
         </div>
-      </div>
-    </CardContent>
+      </CardContent>
+    </Card>
   );
 };
-

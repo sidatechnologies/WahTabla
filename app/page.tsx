@@ -135,6 +135,40 @@ const HomePage = () => {
           </p>
         </CardContent>
       </Card>
+      <Card className="w-full bg-primary shadow-none border-none text-white pb-0 mt-6">
+        <CardHeader className="pb-0">
+          <CardTitle className="text-3xl">ABOUT THE INSTRUCTOR</CardTitle>
+          <CardDescription className="flex flex-col laptop:flex-row justify-center md:justify-between items-center laptop:items-start gap-2 pt-4 relative">
+            <span className=" laptop:text-base text-white">
+              Abhijit Banerjee is one of the top-ranking Indian musicians of
+              present generation. A disciple of the illustrious guru, the late
+              Pt. Jnan Prakash Ghosh, featured in all prominent festivals in
+              India and abroad, Abhijit has collaborated with Grammy Winners
+              international musicians like L. Shenkar, Ry Cooder, Larry Coryell,
+              and Denmark Radio Jazz Orchestra. Besides being featured in
+              prestigious venues like Carnegie Hall NY, Palais in Brussels,
+              Queen Elizabeth Hall, London, Abhijit is now the Head of the
+              department of Tabla in Chinmaya Viswa Vidyapeeth University, Pune
+              and an adjunct faculty in the college of New Jersey (TCNJ). Apart
+              from his contributions to Indian music he has left his mark in a
+              diverse field of crossover music, both as a performer and a
+              composer. Abhijit has more than 55 audio and video publications
+              throughout the world. Abhijit is a recipient of APPEX fellowship
+              from UCLA. In his academic life he is a graduate in English
+              literature and postgraduate in Journalism. Abhijit is the founder
+              and inspiration of DHWANI ACADEMY in INDIA and the US, started
+              with the aim of promotion of Indian cultural heritage.
+            </span>
+            <Image
+              src="/instructor.png"
+              alt="arrow"
+              width={0}
+              height={0}
+              className="w-[300px] laptop:w-[400px] relative bottom-0"
+            />
+          </CardDescription>
+        </CardHeader>
+      </Card>
       <Card
         id="benefits"
         className="w-full bg-transparent shadow-none border-none mt-6 px-0"
@@ -340,40 +374,6 @@ const HomePage = () => {
               })}
           </div>
         </CardContent>
-      </Card>
-      <Card className="w-full bg-primary shadow-none border-none text-white pb-0 mt-6">
-        <CardHeader className="pb-0">
-          <CardTitle className="text-3xl">ABOUT THE INSTRUCTOR</CardTitle>
-          <CardDescription className="flex flex-col laptop:flex-row justify-center md:justify-between items-center laptop:items-start gap-2 pt-4 relative">
-            <span className=" laptop:text-base text-white">
-              Abhijit Banerjee is one of the top-ranking Indian musicians of
-              present generation. A disciple of the illustrious guru, the late
-              Pt. Jnan Prakash Ghosh, featured in all prominent festivals in
-              India and abroad, Abhijit has collaborated with Grammy Winners
-              international musicians like L. Shenkar, Ry Cooder, Larry Coryell,
-              and Denmark Radio Jazz Orchestra. Besides being featured in
-              prestigious venues like Carnegie Hall NY, Palais in Brussels,
-              Queen Elizabeth Hall, London, Abhijit is now the Head of the
-              department of Tabla in Chinmaya Viswa Vidyapeeth University, Pune
-              and an adjunct faculty in the college of New Jersey (TCNJ). Apart
-              from his contributions to Indian music he has left his mark in a
-              diverse field of crossover music, both as a performer and a
-              composer. Abhijit has more than 55 audio and video publications
-              throughout the world. Abhijit is a recipient of APPEX fellowship
-              from UCLA. In his academic life he is a graduate in English
-              literature and postgraduate in Journalism. Abhijit is the founder
-              and inspiration of DHWANI ACADEMY in INDIA and the US, started
-              with the aim of promotion of Indian cultural heritage.
-            </span>
-            <Image
-              src="/instructor.png"
-              alt="arrow"
-              width={0}
-              height={0}
-              className="w-[300px] laptop:w-[400px] relative bottom-0"
-            />
-          </CardDescription>
-        </CardHeader>
       </Card>
       {/* <PricingOld /> */}
       <PricingNew />
