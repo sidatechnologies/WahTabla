@@ -237,13 +237,6 @@ export function VideoDetails({
 
   return (
     <div className="relative p-6">
-      <Link href="/profile" className="md:hidden">
-        <Button variant="outline" className="rounded-full">
-          <ArrowLeftIcon />
-          Profile
-        </Button>
-      </Link>
-
       <div className="w-full flex items-center justify-between">
         <h2 className="mb-4 text-2xl font-bold">{video.videoTitle}</h2>
       </div>

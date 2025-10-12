@@ -1,5 +1,5 @@
 "use client";
-
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import {
   ChevronDown,
@@ -21,20 +21,30 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+} from "@/components/ui/dialog";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+} from "@/components/ui/sidebar"
 import { Year, Video, VideoAnalytics } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { ExamTable } from "./exam-table";
 import { useRouter } from "next/navigation";
+import appLogo from "@/public/icons/logo.svg"
+
 
 type CourseSidebarProps = {
   courseId: number;
@@ -69,31 +79,27 @@ export function CourseSidebar({
   const [openModules, setOpenModules] = useState<number[]>([]);
   const [openMonths, setOpenMonths] = useState<number[]>([]);
   const [initialized, setInitialized] = useState(false);
+  const [available, setAvailable] = useState(false);
+  const router = useRouter();
 
   const allWatched = allVideos.every((video) => {
     const analytics = videoData.find((v) => v.videoId === video.videoId);
-    return (
-      analytics?.watchProgress !== undefined && analytics.watchProgress >= 90
-    );
+    return analytics?.watchProgress !== undefined && analytics.watchProgress >= 90;
   });
-
-  const [available, setAvailable] = useState(false)
 
   useEffect(() => {
     if (!year.exams || year.exams.length === 0) {
-      setAvailable(false)
-      return
+      setAvailable(false);
+      return;
     }
 
-    // Check if all exams have at least one attempt passed
     const allPassed = year.exams.every((exam) => {
-      const lastAttempt = (exam as any).attempts?.[(exam as any).attempts.length - 1]
-      return lastAttempt?.passed === true
-    })
+      const lastAttempt = (exam as any).attempts?.[(exam as any).attempts.length - 1];
+      return lastAttempt?.passed === true;
+    });
 
-    setAvailable(allPassed)
-  }, [year.exams])
-
+    setAvailable(allPassed);
+  }, [year.exams]);
 
   useEffect(() => {
     if (!selectedWeek || initialized) return;
@@ -120,27 +126,18 @@ export function CourseSidebar({
 
     if (foundModule) setOpenModules([foundModule]);
     if (foundMonth) setOpenMonths([foundMonth]);
-
-    // setInitialized(true);
+    setInitialized(true);
   }, [selectedWeek, year, initialized]);
-
-  const router = useRouter();
-
-  let weekCounter = 1;
 
   const toggleModule = (moduleId: number) => {
     setOpenModules((prev) =>
-      prev.includes(moduleId)
-        ? prev.filter((id) => id !== moduleId)
-        : [...prev, moduleId]
+      prev.includes(moduleId) ? prev.filter((id) => id !== moduleId) : [...prev, moduleId]
     );
   };
 
   const toggleMonth = (monthId: number) => {
     setOpenMonths((prev) =>
-      prev.includes(monthId)
-        ? prev.filter((id) => id !== monthId)
-        : [...prev, monthId]
+      prev.includes(monthId) ? prev.filter((id) => id !== monthId) : [...prev, monthId]
     );
   };
 
@@ -149,11 +146,30 @@ export function CourseSidebar({
     return match ? parseInt(match[0], 10) : null;
   }
 
+  let weekCounter = 1;
+
   return (
-    <div className="rounded-lg hidden md:block relative h-[calc(100vh-4rem)] w-80 p-1 backdrop-blur-md bg-white/4 border-2 border-slate-600 flex flex-col">
-      <ScrollArea className="h-[calc(100vh-7rem)] w-full">
-        <div className="w-full p-4">
-          <h2 className="mb-4 text-lg font-semibold">{year.yearName}</h2>
+    <Sidebar variant="inset" className="hidden md:flex">
+      <SidebarHeader>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton size="lg" asChild>
+              <a href="#">
+                <Image src={appLogo} alt="AlphaFusion Trademark" width={35} className="p-1 border rounded-sm" />
+
+                <div className="grid flex-1 text-left text-lg leading-tight">
+                  <span className="truncate font-medium">WahTabla</span>
+                  <span className="truncate text-[10px]">Learning Platform</span>
+                </div>
+              </a>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarHeader>
+
+      <SidebarContent>
+        <ScrollArea className="h-[calc(100vh-8rem)] w-full p-2">
+          <SidebarGroupLabel>{year.yearName}</SidebarGroupLabel>
           {year.modules.map((courseModule) => (
             <Collapsible
               key={courseModule.moduleId}
@@ -171,13 +187,11 @@ export function CourseSidebar({
                   {courseModule.moduleName}
                 </Button>
               </CollapsibleTrigger>
-              <CollapsibleContent className="w-full">
+
+              <CollapsibleContent>
                 {courseModule.months.map((month) => {
                   const totalWeeks = 4;
-                  const allWeeks = Array.from(
-                    { length: totalWeeks },
-                    () => `Week ${weekCounter++}`
-                  );
+                  const allWeeks = Array.from({ length: totalWeeks }, () => `Week ${weekCounter++}`);
 
                   const videoMap = new Map(
                     month.videos.map((video) => {
@@ -198,10 +212,7 @@ export function CourseSidebar({
                       onOpenChange={() => toggleMonth(month.monthId)}
                     >
                       <CollapsibleTrigger asChild>
-                        <Button
-                          variant="ghost"
-                          className="w-full border border-black justify-start mt-2"
-                        >
+                        <Button variant="ghost" className="w-full border border-black justify-start mt-2">
                           {openMonths.includes(month.monthId) ? (
                             <ChevronDown className="mr-2 h-4 w-4" />
                           ) : (
@@ -210,42 +221,23 @@ export function CourseSidebar({
                           {month.monthName}
                         </Button>
                       </CollapsibleTrigger>
-                      <CollapsibleContent className="w-full">
+
+                      <CollapsibleContent>
                         {allWeeks.map((weekTitle, index) => {
                           const normalizedWeekTitle = weekTitle.toLowerCase();
-                          const extractedWeekNumber =
-                            extractWeekNumber(normalizedWeekTitle);
+                          const extractedWeekNumber = extractWeekNumber(normalizedWeekTitle);
                           const video = videoMap.get(normalizedWeekTitle);
                           const isSelected = selectedWeek === weekTitle;
                           const hasExam =
                             extractedWeekNumber !== null &&
-                            mergedList.find(
-                              (exam) => exam.weekNumber === extractedWeekNumber
-                            );
-                          const weekNumberMatch = weekTitle.match(/\d+/);
-                          const weekNumber = weekNumberMatch
-                            ? parseInt(weekNumberMatch[0], 10)
-                            : index + 1;
+                            mergedList.find((exam) => exam.weekNumber === extractedWeekNumber);
+                          const weekNumber = parseInt(weekTitle.match(/\d+/)?.[0] || "0", 10);
+                          const analytics = video ? videoData.find((v) => v.videoId === video.videoId) : null;
+                          const examAnalytics = hasExam ? videoData.find((v) => v.examId === hasExam.examId) : null;
 
-                          const analytics = video
-                            ? videoData.find(
-                              (v) => v.videoId === video.videoId
-                            )
-                            : null;
-                          const examAnalytics = hasExam
-                            ? videoData.find(
-                              (v) => v.examId === hasExam.examId
-                            )
-                            : null;
-                          const isDisabled =
-                            !analytics || !analytics.isAvailable;
-                          const isGettingWatched = analytics
-                            ? analytics.watchProgress >= 0 &&
-                            analytics.watchProgress < 90
-                            : false;
-                          const isFullyWatched = analytics
-                            ? analytics.watchProgress >= 90
-                            : false;
+                          const isDisabled = !analytics || !analytics.isAvailable;
+                          const isGettingWatched = analytics && analytics.watchProgress >= 0 && analytics.watchProgress < 90;
+                          const isFullyWatched = analytics && analytics.watchProgress >= 90;
 
                           return (
                             <Button
@@ -253,12 +245,8 @@ export function CourseSidebar({
                               variant="ghost"
                               className={cn(
                                 "w-full justify-between mt-2",
-                                isSelected ? "bg-white border-none" : "",
-                                examAnalytics
-                                  ? ""
-                                  : isDisabled
-                                    ? "relative opacity-50"
-                                    : ""
+                                isSelected ? "bg-accent border-none" : "",
+                                examAnalytics ? "" : isDisabled ? "relative opacity-50" : ""
                               )}
                               onClick={() => {
                                 if (hasExam) {
@@ -278,13 +266,7 @@ export function CourseSidebar({
                                     weekTitle
                                   );
                                 } else {
-                                  onVideoSelect(
-                                    video
-                                      ? { ...video, isExam: false }
-                                      : null,
-                                    weekNumber - 1,
-                                    weekTitle
-                                  );
+                                  onVideoSelect(video ? { ...video, isExam: false } : null, weekNumber - 1, weekTitle);
                                 }
                               }}
                             >
@@ -299,17 +281,13 @@ export function CourseSidebar({
                                 {weekTitle}
                               </div>
                               {examAnalytics ? (
-                                <ChartColumnIncreasing className="relative right-0 ml-2 h-4 w-4" />
+                                <ChartColumnIncreasing className="ml-2 h-4 w-4" />
+                              ) : isDisabled ? (
+                                <Lock className="ml-2 h-4 w-4" />
+                              ) : isGettingWatched ? (
+                                <Eye className="ml-2 h-4 w-4" />
                               ) : (
-                                isDisabled && (
-                                  <Lock className="relative right-0 ml-2 h-4 w-4" />
-                                )
-                              )}
-                              {isGettingWatched && (
-                                <Eye className="relative right-0 ml-2 h-4 w-4" />
-                              )}
-                              {isFullyWatched && (
-                                <BadgeCheck className="relative right-0 ml-2 h-4 w-4" />
+                                isFullyWatched && <BadgeCheck className="ml-2 h-4 w-4" />
                               )}
                             </Button>
                           );
@@ -321,14 +299,12 @@ export function CourseSidebar({
               </CollapsibleContent>
             </Collapsible>
           ))}
+
+          {/* Final Exam Dialog */}
           <Dialog>
             <form>
               <DialogTrigger asChild>
-                <Button
-                  variant="destructive"
-                  disabled={!allWatched}
-                  className="w-full mt-2"
-                >
+                <Button variant="destructive" disabled={!allWatched} className="w-full mt-3">
                   Final Exam
                 </Button>
               </DialogTrigger>
@@ -344,24 +320,29 @@ export function CourseSidebar({
                   <DialogClose asChild>
                     <Button variant="outline">Cancel</Button>
                   </DialogClose>
-                  <Button type="submit" onClick={() =>
-                    router.push(
-                      `/exam/final/courses/${courseId}/year/${year.yearId}/week/52`
-                    )
-                  } disabled={!available}>
-                    Final Exam</Button>
+                  <Button
+                    type="submit"
+                    onClick={() =>
+                      router.push(`/exam/final/courses/${courseId}/year/${year.yearId}/week/52`)
+                    }
+                    disabled={!available}
+                  >
+                    Final Exam
+                  </Button>
                 </DialogFooter>
               </DialogContent>
             </form>
           </Dialog>
+        </ScrollArea>
+      </SidebarContent>
 
-        </div>
-      </ScrollArea >
-      <Link href="/profile" className="absolute bottom-0 left-0 w-full p-4">
-        <Button variant="outline" className="w-full bg-white">
-          Profile
-        </Button>
-      </Link>
-    </div >
+      <SidebarFooter>
+        <Link href="/profile" className="w-full">
+          <Button variant="outline" className="w-full bg-white">
+            Profile
+          </Button>
+        </Link>
+      </SidebarFooter>
+    </Sidebar>
   );
 }

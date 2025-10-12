@@ -9,6 +9,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useEffect } from "react";
 import { Year } from "@/lib/types";
 
+
 export default function YearPage({ params }: { params: { courseId: string; yearId: string } }) {
   const yearId = parseInt(params.yearId);
   const courseId = parseInt(params.courseId);

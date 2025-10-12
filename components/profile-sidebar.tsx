@@ -71,7 +71,7 @@ const ProfileSidebar = () => {
 
                 <div className="grid flex-1 text-left text-lg leading-tight">
                   <span className="truncate font-medium">WahTabla</span>
-                  <span className="truncate text-xs">Music</span>
+                  <span className="truncate text-[10px]">Learning Platform</span>
                 </div>
               </a>
             </SidebarMenuButton>

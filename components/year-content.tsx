@@ -19,6 +19,12 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { ExamTable } from "./exam-table";
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar"
+import PanelTopbar from "./panel-topbar";
 
 
 type YearContentProps = {
@@ -457,7 +463,7 @@ export function YearContent({ year, courseId, videoData, setVideoData, yearId }:
   };
 
   return (
-    <div className="flex h-[calc(100vh-4rem)] py-4 space-x-4 relative">
+    <SidebarProvider>
       <CourseSidebar
         courseId={courseId}
         year={year}
@@ -472,42 +478,44 @@ export function YearContent({ year, courseId, videoData, setVideoData, yearId }:
         mergedList={allExams}
         allVideos={allVideos}
       />
+      <SidebarInset>
+        <div className="flex space-x-4 relative m-0">
+          <main
+            className={`flex-1 relative ${isDisabled ? "overflow-hidden" : "overflow-y-auto"
+              } backdrop-blur-md rounded-lg`}
+          >
+            <PanelTopbar suite={year.yearName} service={selectedWeek} />
+            {selectedVideo?.isExam ? isDisabled ? (
+              <div className="absolute inset-0 z-50 bg-white/30 backdrop-blur-sm flex flex-col items-center justify-center cursor-not-allowed m-2 rounded-lg">
+                <Lock className="h-10 w-10" />
+                <p className="text-xl font-bold text-red-600">Exam Locked</p>
+                <p className="text-md text-black-600">
+                  Complete the previous videos to get access!
+                </p>
+              </div>
+            ) : "" : isDisabled ? (
+              <div className="absolute inset-0 z-50 bg-white/30 backdrop-blur-sm flex flex-col items-center justify-center cursor-not-allowed m-2 rounded-lg">
+                <Lock className="h-10 w-10" />
+                <p className="text-xl font-bold text-red-600">Video Locked</p>
+                <p className="text-md text-black-600">
+                  Complete the previous videos to get access!
+                </p>
+              </div>
+            ) : ""}
 
-      <main
-        className={`flex-1 relative ${isDisabled ? "overflow-hidden" : "overflow-y-auto"
-          } backdrop-blur-md h-[calc(100vh-4rem)] rounded-lg border-2 border-slate-600`}
-      >
-        {selectedVideo?.isExam ? isDisabled ? (
-          <div className="absolute inset-0 z-50 bg-white/30 backdrop-blur-sm flex flex-col items-center justify-center cursor-not-allowed m-2 rounded-lg">
-            <Lock className="h-10 w-10" />
-            <p className="text-xl font-bold text-red-600">Exam Locked</p>
-            <p className="text-md text-black-600">
-              Complete the previous videos to get access!
-            </p>
-          </div>
-        ) : "" : isDisabled ? (
-          <div className="absolute inset-0 z-50 bg-white/30 backdrop-blur-sm flex flex-col items-center justify-center cursor-not-allowed m-2 rounded-lg">
-            <Lock className="h-10 w-10" />
-            <p className="text-xl font-bold text-red-600">Video Locked</p>
-            <p className="text-md text-black-600">
-              Complete the previous videos to get access!
-            </p>
-          </div>
-        ) : ""}
+            <VideoDetails
+              video={selectedVideo}
+              yearName={year.yearName}
+              selectedWeek={selectedWeek}
+              courseId={courseId}
+              yearId={year.yearId}
+              videoData={videoData}
+              setVideoData={setVideoData}
+              isDisabledState={isDisabledState}
+              setIsDisabledState={setIsDisabledState}
+            />
 
-        <VideoDetails
-          video={selectedVideo}
-          yearName={year.yearName}
-          selectedWeek={selectedWeek}
-          courseId={courseId}
-          yearId={year.yearId}
-          videoData={videoData}
-          setVideoData={setVideoData}
-          isDisabledState={isDisabledState}
-          setIsDisabledState={setIsDisabledState}
-        />
-
-        {/* {!isDisabled && (
+            {/* {!isDisabled && (
           <div className="mt-4 flex justify-between p-4">
             <Button
               onClick={handlePrevVideo}
@@ -523,59 +531,61 @@ export function YearContent({ year, courseId, videoData, setVideoData, yearId }:
             </Button>
           </div>
         )} */}
-        {isDisabled ? "" : selectedVideo?.isExam ? "" : (
-          <div className="mt-4 flex justify-between p-4">
-            <Button
-              onClick={handlePrevVideo}
-              disabled={selectedVideoIndex === 0}
-            >
-              Previous
-            </Button>
-            {
-              hasFinalAfter ?
-                <Dialog>
-                  <form>
-                    <DialogTrigger asChild>
-                      <Button
-                        variant="destructive"
-                        disabled={!canGoNext}
-                      >
-                        Final Exam
-                      </Button>
-                    </DialogTrigger>
-                    <DialogContent className="sm:max-w-[550px]">
-                      <DialogHeader>
-                        <DialogTitle>Exam Overview</DialogTitle>
-                        <DialogDescription>
-                          Here’s a list of all your assessments for this term
-                        </DialogDescription>
-                      </DialogHeader>
-                      <ExamTable data={year.exams} courseId={courseId} yearId={year.yearId} />
-                      <DialogFooter>
-                        <DialogClose asChild>
-                          <Button variant="outline">Cancel</Button>
-                        </DialogClose>
-                        <Button type="submit" onClick={() =>
-                          router.push(
-                            `/exam/final/courses/${courseId}/year/${year.yearId}/week/52`
-                          )
-                        } disabled={!available}>
-                          Final Exam</Button>
-                      </DialogFooter>
-                    </DialogContent>
-                  </form>
-                </Dialog> : <Button
-                  onClick={handleNextVideo}
-                  disabled={!canGoNext || hasFinalAfter}
+            {isDisabled ? "" : selectedVideo?.isExam ? "" : (
+              <div className="mt-4 flex justify-between p-4">
+                <Button
+                  onClick={handlePrevVideo}
+                  disabled={selectedVideoIndex === 0}
                 >
-                  Next
+                  Previous
                 </Button>
-            }
+                {
+                  hasFinalAfter ?
+                    <Dialog>
+                      <form>
+                        <DialogTrigger asChild>
+                          <Button
+                            variant="destructive"
+                            disabled={!canGoNext}
+                          >
+                            Final Exam
+                          </Button>
+                        </DialogTrigger>
+                        <DialogContent className="sm:max-w-[550px]">
+                          <DialogHeader>
+                            <DialogTitle>Exam Overview</DialogTitle>
+                            <DialogDescription>
+                              Here’s a list of all your assessments for this term
+                            </DialogDescription>
+                          </DialogHeader>
+                          <ExamTable data={year.exams} courseId={courseId} yearId={year.yearId} />
+                          <DialogFooter>
+                            <DialogClose asChild>
+                              <Button variant="outline">Cancel</Button>
+                            </DialogClose>
+                            <Button type="submit" onClick={() =>
+                              router.push(
+                                `/exam/final/courses/${courseId}/year/${year.yearId}/week/52`
+                              )
+                            } disabled={!available}>
+                              Final Exam</Button>
+                          </DialogFooter>
+                        </DialogContent>
+                      </form>
+                    </Dialog> : <Button
+                      onClick={handleNextVideo}
+                      disabled={!canGoNext || hasFinalAfter}
+                    >
+                      Next
+                    </Button>
+                }
 
-          </div>
-        )
-        }
-      </main >
-    </div >
+              </div>
+            )
+            }
+          </main >
+        </div >
+      </SidebarInset>
+    </SidebarProvider>
   );
 }
