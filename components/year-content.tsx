@@ -479,10 +479,10 @@ export function YearContent({ year, courseId, videoData, setVideoData, yearId }:
         allVideos={allVideos}
       />
       <SidebarInset>
-        <div className="flex space-x-4 relative m-0">
+        <div className="flex space-x-4 relative m-0 h-full">
           <main
             className={`flex-1 relative ${isDisabled ? "overflow-hidden" : "overflow-y-auto"
-              } backdrop-blur-md rounded-lg`}
+              } backdrop-blur-md rounded-lg h-full`}
           >
             <PanelTopbar suite={year.yearName} service={selectedWeek} />
             {selectedVideo?.isExam ? isDisabled ? (

@@ -10,6 +10,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import Link from "next/link";
 import {
   Archive,
   Layers,
@@ -66,14 +67,14 @@ const ProfileSidebar = () => {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <a href="#">
+              <Link href="/">
                 <Image src={appLogo} alt="AlphaFusion Trademark" width={35} className="p-1 border rounded-sm" />
 
                 <div className="grid flex-1 text-left text-lg leading-tight">
                   <span className="truncate font-medium">WahTabla</span>
                   <span className="truncate text-[10px]">Learning Platform</span>
                 </div>
-              </a>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

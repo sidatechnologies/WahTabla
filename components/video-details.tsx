@@ -167,7 +167,7 @@ export function VideoDetails({
 
   if (!video || video.isExam) {
     return (
-      <div className="flex h-full items-center justify-center">
+      <div className="flex h-full w-full items-center justify-center">
         {selectedWeek ? (
           ["Week 13", "Week 26", "Week 39"].includes(selectedWeek) ? (
             <div className="flex flex-col justify-center items-center gap-8">

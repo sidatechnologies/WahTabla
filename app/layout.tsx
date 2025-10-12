@@ -2,11 +2,8 @@ import type { Metadata } from "next";
 import { inter, hankenGrotesk, geistSans, geistMono } from "@/app/fonts/font";
 import "./globals.css";
 import { cn } from "@/lib/utils";
-import Navbar from "@/components/navbar";
-import Footer from "@/components/footer";
-import { Toaster } from "@/components/ui/sonner";
-import { SessionProvider } from "next-auth/react";
 import Providers from "./providers";
+import ClientLayout from "./client-layout";
 
 export const metadata: Metadata = {
   title: "Wah Tabla - Learn Music Online from Experts",
@@ -15,9 +12,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
       <body
@@ -30,18 +25,8 @@ export default function RootLayout({
         )}
       >
         <Providers>
-          <SessionProvider>
-            <div className="w-full relative">
-              <Navbar />
-            </div>
-            <main className=" flex flex-col justify-start items-start max-w-[1512px] w-full mx-auto">
-              {children}
-            </main>
-            {/* <div className="w-full flex justify-center items-center">
-              <Footer />
-            </div> */}
-            <Toaster />
-          </SessionProvider>
+          {/* 🔽 Wrap all client logic inside a client layout */}
+          <ClientLayout>{children}</ClientLayout>
         </Providers>
       </body>
     </html>

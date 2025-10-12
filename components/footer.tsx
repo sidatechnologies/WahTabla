@@ -106,6 +106,9 @@ const Footer = () => {
             <Link href="/legal/cancellation-policy" className="text-white">
               Cancellation Policy
             </Link>
+            <Link href="/legal/shipping-policy" className="text-white">
+              Shipping Policy
+            </Link>
           </div>
           <div className="flex flex-col justify-start items-start gap-1">
             <Link href="/" className="text-lg pb-1 font-semibold">
