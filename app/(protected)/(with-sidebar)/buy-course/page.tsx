@@ -1,10 +1,11 @@
 import BuyCourse from '@/components/buy-course'
-
+import PanelTopbar from '@/components/panel-topbar'
 const Page = () => {
   return (
-    // <div className='w-full min-h-screen flex flex-col justify-start items-start gap-10 mx-auto py-8'>
+    <div className="rounded-lg overflow-hidden">
+      <PanelTopbar suite="WahTabla" service="Buy Courses" />
       <BuyCourse />
-    // </div>
+    </div>
   )
 }
 

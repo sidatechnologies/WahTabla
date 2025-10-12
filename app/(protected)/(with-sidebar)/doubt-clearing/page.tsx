@@ -1,11 +1,13 @@
 import DoubtClearingEmbedd from "@/components/doubt-clearing-embedd";
 import React from "react";
+import PanelTopbar from "@/components/panel-topbar";
 
 const DoubtClearingPage = () => {
   return (
-    <div className="max-w-[1196px] w-full flex justify-start px-0 mx-auto tablet:max-w-full tablet:mx-0 tablet:pl-4 tablet:gap-4">
-      <DoubtClearingEmbedd />
-    </div>
+      <div className="rounded-lg overflow-hidden">
+        <PanelTopbar suite="WahTabla" service="Doubt Clearing" />
+        <DoubtClearingEmbedd />
+      </div>
   );
 };
 

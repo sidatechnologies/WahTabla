@@ -1,4 +1,5 @@
 import { getProfileData } from "@/action/profile/get-profile-data";
+import PanelTopbar from "@/components/panel-topbar";
 import ProfileDashboard from "@/components/profile-dashboard";
 import {
   dehydrate,
@@ -17,10 +18,10 @@ const Page = async () => {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <div className="w-full flex flex-col desktop:flex-row justify-start px-0 mx-auto tablet:max-w-full tablet:mx-0 tablet:pl-4 tablet:gap-4">
-        <div className="w-full h-full flex justify-center items-start">
-          <ProfileDashboard />
-        </div>
+      <div className="rounded-lg overflow-hidden">
+        <PanelTopbar suite="WahTabla" service="Exams" />
+        <ProfileDashboard />
+        {/* <Profile /> */}
       </div>
     </HydrationBoundary>
   );

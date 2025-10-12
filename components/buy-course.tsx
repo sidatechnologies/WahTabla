@@ -67,17 +67,9 @@ const BuyCourse = () => {
   };
 
   return (
-    <div className="w-full p-5 ml-2 bg-white rounded-md h-full">
+    <div className="w-full p-5 rounded-md h-full">
       <div className="w-full flex justify-center items-center gap-6">
         <div className="w-full flex flex-col justify-start items-start gap-2 py-10 pt-6">
-          {/* <Button
-            variant="secondary"
-            size="icon"
-            className="rounded-full mb-6"
-            onClick={() => router.back()}
-          >
-            <ArrowLeftIcon />
-          </Button> */}
           <Label>Select Course</Label>
           <RadioGroup
             value={selectedCourse.name}
@@ -99,7 +91,7 @@ const BuyCourse = () => {
                   >
                     <CardContent className="flex justify-center items-center gap-4 py-2">
                       <RadioGroupItem value={course.name} id={course.name} />
-                      <Label className="text-lg font-semibold cursor-pointer select-none">
+                      <Label className="text-sm font-semibold cursor-pointer select-none">
                         Dhwani {course.name}
                       </Label>
                     </CardContent>

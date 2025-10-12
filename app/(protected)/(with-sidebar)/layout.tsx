@@ -1,4 +1,9 @@
 import ProfileSidebar from "@/components/profile-sidebar";
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar"
 
 export default function dashboardLayout({
   children,
@@ -6,11 +11,13 @@ export default function dashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <section className="w-full flex mt-8 relative scroll-smooth">
-      <aside className="hidden w-[300px] h-full md:flex flex-col justify-start items-start sticky top-8">
+    <div className="w-full h-screen">
+      <SidebarProvider>
         <ProfileSidebar />
-      </aside>
-      {children}
-    </section>
+        <SidebarInset>
+          {children}
+        </SidebarInset>
+      </SidebarProvider>
+    </div>
   );
 }

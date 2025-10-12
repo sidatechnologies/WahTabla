@@ -32,20 +32,9 @@ const ProfileModuleList = () => {
   // console.log(courses)
 
   return (
-    <div className="min-w-[600px] w-full min-h-[92vh] bg-white rounded-lg flex justify-start items-start p-4 shadow-sm">
+    <div className="w-full min-h-[92vh] rounded-lg flex justify-start items-start p-4 shadow-sm h-full bg-[#e0c4a4]">
       {courses?.data ? (
-        <div className="w-full h-full flex flex-col justify-start items-start gap-8 rounded-lg py-1">
-          <div className="w-full flex justify-between items-center">
-            <span className="text-2xl text-left font-semibold">
-              Your Courses({Object.keys(courses?.data).length})
-            </span>
-            {/* <Button
-              variant="secondary"
-              className="font-semibold shadow-none border-none hover:underline"
-            >
-              View All
-            </Button> */}
-          </div>
+        <div className="flex flex-col justify-start items-start gap-8 rounded-lg py-1">
           {courses.data ? (
             <CoursesTable data={courses.data} />
           ) : (

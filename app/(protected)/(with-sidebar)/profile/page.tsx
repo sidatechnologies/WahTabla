@@ -6,6 +6,7 @@ import {
 
 
 import ProfileModuleList from "@/components/profile-module-list";
+import PanelTopbar from "@/components/panel-topbar";
 import Profile from "@/components/profile";
 import { getProfile } from "@/action/profile/getProfile";
 
@@ -19,11 +20,12 @@ const ProfilePage = async () => {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <div className="max-w-[1196px] w-full flex flex-col desktop:flex-row justify-start px-0 mx-auto tablet:max-w-full tablet:mx-0 tablet:pl-4 tablet:gap-4">
+      <div className="rounded-lg overflow-hidden">
+        <PanelTopbar suite="WahTabla" service="Courses" />
         <ProfileModuleList />
-        <Profile />
+        {/* <Profile /> */}
       </div>
-    </HydrationBoundary>
+    </HydrationBoundary >
   );
 };
 

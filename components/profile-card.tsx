@@ -144,25 +144,9 @@ export default function ProfileCard() {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto p-4 sm:p-6 lg:p-8">
-      <Card className="border-0 shadow-2xl bg-gradient-to-br from-white to-gray-50/50 backdrop-blur-sm">
-        <CardHeader className="space-y-4 pb-6 px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center space-x-3">
-            <div className="p-2 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl shadow-lg">
-              <User className="h-6 w-6 text-white" />
-            </div>
-            <div>
-              <CardTitle className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
-                Profile Settings
-              </CardTitle>
-              <CardDescription className="text-sm sm:text-base text-gray-600 mt-1">
-                Manage your account settings and security preferences
-              </CardDescription>
-            </div>
-          </div>
-        </CardHeader>
-
-        <CardContent className="px-4 sm:px-6 lg:px-8 pb-6 sm:pb-8">
+    <div className="w-full mx-auto p-2">
+      <Card className="bg-none border-0 shadow-2xl backdrop-blur-sm w-full p-2">
+        <CardContent className="p-0">
           <Tabs defaultValue="profile" className="w-full">
             <TabsList className="grid w-full grid-cols-2 h-12 bg-gray-100/80 backdrop-blur-sm rounded-xl p-1">
               <TabsTrigger

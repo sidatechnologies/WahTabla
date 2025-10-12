@@ -14,7 +14,7 @@ export default function DoubtClearingEmbedd() {
     })();
   }, []);
   return (
-    <div className=" w-full flex justify-center items-start overflow-scrolls">
+    <div className="w-full flex justify-center items-center mt-2 overflow-scrolls">
       <Cal
         namespace="doubt"
         calLink="dhwaniacademy/doubt"

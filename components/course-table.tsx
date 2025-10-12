@@ -18,11 +18,11 @@ export default function CoursesPills({ data }: { data: ParsedResponse }) {
   }
 
   return (
-    <div className="space-y-6 w-full">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 w-full">
       {Object.entries(data).map(([courseId, course]) => (
         <div key={courseId} className="w-full p-3 space-y-4 bg-gradient-to-r from-white-200 to-blue-300 transition-colors duration-300 rounded-lg shadow-xl border bg-muted">
           {/* Course Name */}
-          <h2 className="text-xl font-bold tracking-tight">
+          <h2 className="text-sm font-bold tracking-tight">
             DHWANI {course.courseName}
           </h2>
 
@@ -34,14 +34,14 @@ export default function CoursesPills({ data }: { data: ParsedResponse }) {
                 onClick={() =>
                   router.push(`/courses/${courseId}/year/${year.yearId}`)
                 }
-                className="cursor-pointer px-4 py-2  flex flex-col min-w-[160px]"
+                className="cursor-pointer px-4 py-2 flex flex-col"
               >
-                <span className="font-medium">{year.yearName}</span>
+                <span className="font-medium text-xs">{year.yearName}</span>
                 <div className="flex flex-wrap gap-2 mt-1">
                   {year.modules?.map((module) => (
                     <span
                       key={module.moduleId}
-                      className="bg-white/70 text-sm text-gray-700 px-2 py-1 rounded-full"
+                      className="bg-white/70 text-xs text-gray-700 px-3 py-1 rounded-full"
                     >
                       {module.moduleName}
                     </span>

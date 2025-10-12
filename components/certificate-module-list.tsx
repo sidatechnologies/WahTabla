@@ -76,7 +76,7 @@ const CertificateModuleList = () => {
     const safeCourses = courses as unknown as SuccessResponse
 
     return (
-        <div className="min-w-[600px] w-full min-h-[92vh] bg-white rounded-lg flex justify-start items-start p-4 shadow-sm">
+        <div className="w-full min-h-[92vh] rounded-lg flex justify-start items-start p-4 shadow-sm">
             {courses?.data ? (
                 <div className="w-full h-full flex flex-col justify-start items-start gap-8 p-5 bg-muted rounded-lg">
                     {courses.data ? (

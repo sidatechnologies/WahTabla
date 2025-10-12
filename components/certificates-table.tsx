@@ -111,7 +111,6 @@ export default function CertificateTable({ data, user }: Props) {
 
     return (
         <div className="w-full space-y-6">
-            <h1 className="text-2xl font-bold">Your Certificates</h1>
 
             <Table className="w-full">
                 <TableHeader>

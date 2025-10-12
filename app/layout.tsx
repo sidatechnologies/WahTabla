@@ -34,12 +34,12 @@ export default function RootLayout({
             <div className="w-full relative">
               <Navbar />
             </div>
-            <main className=" flex flex-col justify-start items-start max-w-[1512px] w-full mx-auto px-4">
+            <main className=" flex flex-col justify-start items-start max-w-[1512px] w-full mx-auto">
               {children}
             </main>
-            <div className="w-full flex justify-center items-center">
+            {/* <div className="w-full flex justify-center items-center">
               <Footer />
-            </div>
+            </div> */}
             <Toaster />
           </SessionProvider>
         </Providers>
