@@ -89,6 +89,9 @@ const Footer = () => {
             <Link href="https://dhwaniacademy.us/" className="text-white">
               Dhwani US
             </Link>
+            <Link href="/legal/contact" className="text-white">
+              Contact US
+            </Link>
           </div>
           <div className="flex flex-col justify-start items-start gap-1 text-sm">
             <Link href="/" className="text-lg pb-1 font-semibold">

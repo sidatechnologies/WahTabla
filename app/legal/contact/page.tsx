@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Mail } from 'lucide-react';
+import { Mail, Phone } from 'lucide-react';
 import Link from 'next/link';
 
 const ContactUsPage: React.FC = () => {
@@ -22,7 +22,7 @@ const ContactUsPage: React.FC = () => {
           </CardHeader>
           <CardContent className="leading-relaxed">
             <p className="text-slate-900 mb-6">
-              Have questions about our online music learning courses? Need assistance with your enrollment? 
+              Have questions about our online music learning courses? Need assistance with your enrollment?
               Want to share feedback or suggestions? We&apos;re here to help!
             </p>
             <p className="text-slate-900 mb-8">
@@ -34,18 +34,34 @@ const ContactUsPage: React.FC = () => {
             </p>
 
             {/* Email Contact Box */}
-            <div className="bg-slate-50 border border-slate-200 rounded-lg p-8 text-center">
-              <Mail className="w-12 h-12 text-blue-600 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-slate-900 mb-2">Email Us</h3>
-              <a 
-                href="mailto:wahhtabla@gmail.com" 
-                className="text-2xl font-medium text-blue-600 hover:text-blue-700 transition-colors"
-              >
-                wahhtabla@gmail.com
-              </a>
-              <p className="text-sm text-slate-600 mt-4">
-                We typically respond within 24-48 hours
-              </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+
+              <div className="bg-slate-50 border border-slate-200 rounded-lg p-8 text-center">
+                <Mail className="w-12 h-12 text-blue-600 mx-auto mb-4" />
+                <h3 className="text-lg font-semibold text-slate-900 mb-2">Email Us</h3>
+                <a
+                  href="mailto:wahhtabla@gmail.com"
+                  className="text-2xl font-medium text-blue-600 hover:text-blue-700 transition-colors"
+                >
+                  wahhtabla@gmail.com
+                </a>
+                <p className="text-sm text-slate-600 mt-4">
+                  We typically respond within 24-48 hours
+                </p>
+              </div>
+              <div className="bg-slate-50 border border-slate-200 rounded-lg p-8 text-center">
+                <Phone className="w-12 h-12 text-blue-600 mx-auto mb-4" />
+                <h3 className="text-lg font-semibold text-slate-900 mb-2">Contact Us</h3>
+                <a
+                  href="mailto:wahhtabla@gmail.com"
+                  className="text-2xl font-medium text-blue-600 hover:text-blue-700 transition-colors"
+                >
+                  +91 3324-466-076
+                </a>
+                <p className="text-sm text-slate-600 mt-4">
+                  We typically respond within 24-48 hours
+                </p>
+              </div>
             </div>
 
             <p className="text-slate-700 mt-8 text-center">
