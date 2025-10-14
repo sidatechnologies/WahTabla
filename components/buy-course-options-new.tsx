@@ -147,7 +147,7 @@ const BuyingOptionsNew = ({ course, userLastPurchase }: propsType) => {
       <Label>Choose Options</Label>
       <Card className="w-full bg-transparent shadow-none border-none mt-6">
         <CardContent className="px-0">
-          <div className="w-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 justify-items-center gap-x-4 gap-y-6">
+          <div className="w-full grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 justify-items-center gap-x-4 gap-y-6">
             {coursePricing?.priceModule.map((priceModel, index) => {
               return (
                 <Card
