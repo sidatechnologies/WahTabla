@@ -24,7 +24,7 @@ import PricingNew from "@/components/pricing-new";
 
 const HomePage = () => {
   return (
-    <div className="w-full h-full flex flex-col justify-center items-center pt-20">
+    <div className="w-full h-full flex flex-col justify-center items-center pt-20 px-6">
       <section
         id="home"
         className="w-full flex flex-col justify-start items-center gap-4"
