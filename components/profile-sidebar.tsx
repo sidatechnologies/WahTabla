@@ -23,6 +23,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { NavProjects } from "./nav-projects";
 import appLogo from "@/public/icons/logo.svg"
+import { NavUser } from "./nav-user";
 
 const data = [
   {
@@ -82,9 +83,9 @@ const ProfileSidebar = () => {
       <SidebarContent>
         <NavProjects projects={data} />
       </SidebarContent>
-      {/* <SidebarFooter>
-        <NavUser user={data.user} />
-      </SidebarFooter> */}
+      <SidebarFooter>
+        <NavUser />
+      </SidebarFooter>
     </Sidebar>
   );
 };
