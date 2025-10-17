@@ -48,7 +48,7 @@ const ProfileModuleList = () => {
         <span className="font-semibold text-sm">Welcome, {courses?.user?.fullName || courses?.user?.username || 'Student'}</span>
       </div>
       {courses?.data && Object.keys(courses.data).length > 0 ? (
-        <div className="flex flex-col justify-start items-start gap-8 rounded-lg py-1">
+        <div className="flex flex-col justify-start items-start gap-8 rounded-lg py-1 mt-2">
           <CoursesTable data={courses.data} />
         </div>
       ) : (
