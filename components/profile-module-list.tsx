@@ -81,7 +81,7 @@ const ProfileModuleList = () => {
 
       {/* Dialog for Demo Video */}
       <Dialog open={!!selectedVideo} onOpenChange={() => setSelectedVideo(null)}>
-        <DialogContent className="max-w-[90vw] p-0 overflow-hidden rounded-xl bg-gradient-to-r from-white-200 to-blue-300 transition-colors duration-300 rounded-lg shadow-xl border bg-muted">
+        <DialogContent className="min-w-lg max-w-[90vw] max-h-[90vh] md:w-fit p-0 overflow-hidden rounded-xl bg-gradient-to-r from-white-200 to-blue-300 transition-colors duration-300 rounded-lg shadow-xl border bg-muted">
           {selectedVideo && (
             <>
               <DialogHeader className="p-4 border-b bg-[#f8f4f0]">
