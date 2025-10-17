@@ -43,7 +43,7 @@ const ProfileModuleList = () => {
   return (
     <div className="w-full flex flex-col min-h-[92vh] rounded-lg flex justify-start items-start p-4 shadow-sm h-full bg-[#e0c4a4]">
       <div className="w-full border rounded-md px-2 py-1 bg-gradient-to-r from-white-200 to-blue-300 transition-colors duration-300 rounded-lg shadow-xl border bg-muted mb-2">
-        <span className="font-semibold text-sm">Welcome, {courses?.user?.username || 'Student'}</span>
+        <span className="font-semibold text-sm">Welcome, {courses?.user?.fullName || courses?.user?.username || 'Student'}</span>
       </div>
       {courses?.data ? (
         <div className="flex flex-col justify-start items-start gap-8 rounded-lg py-1">
