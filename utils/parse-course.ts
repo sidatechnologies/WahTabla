@@ -44,6 +44,7 @@ export type ParsedUserResponse = {
   createdAt: string; // ISO date string
   updatedAt: string; // ISO date string
   profile: UserProfile;
+  purchasePlan?: string;
 }
 
 export function parseResponse(response: UserProfileApiResponseType): ParsedResponse {
