@@ -48,7 +48,6 @@ export const getMcqQuestionsData = async (params: McqExamParams) => {
   try {
 
     const url = `${baseUrl}/exams/exam?courseId=${params.courseId}&yearId=${params.yearId}&weekNumber=${params.weekNumber}&type=mcq`
-    console.log(url)
     
     const response = await fetch(url, options)
     // console.log(response.status)
