@@ -34,13 +34,10 @@ const ResetPassword = () => {
   });
 
   async function onSubmit(values: z.infer<typeof resetPasswordSchema>) {
+    if (!token) return; // token check early
+
     setLoading(true);
     try {
-      if (!token) {
-        // Handle the case when token is null or undefined
-        throw new Error("Token is missing");
-      }
-
       const res = await resetPassword({ ...values, token });
 
       if (!res.success) {
@@ -57,6 +54,27 @@ const ResetPassword = () => {
     } finally {
       setLoading(false);
     }
+  }
+
+  // Show invalid token if token is missing
+  if (!token) {
+    return (
+      <div className="min-h-screen h-full flex items-center justify-center py-12">
+        <div className="mx-auto grid w-[350px] gap-6 text-center">
+          <h1 className="text-3xl font-bold text-red-600">Invalid Token</h1>
+          <p className="text-muted-foreground text-sm">
+            The password reset link is invalid or has expired.
+          </p>
+          <div className="mt-4">
+            <Link href="/auth/forgot-password">
+              <Button className="bg-black font-semibold px-6 py-2">
+                Request New Link
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
