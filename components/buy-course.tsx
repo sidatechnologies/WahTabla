@@ -108,7 +108,7 @@ const BuyCourse = () => {
         </div>
       </div>
       <div>
-        <BuyingOptionsNew course={selectedCourse} userLastPurchase={userLastPurchase} />
+        <BuyingOptionsNew course={selectedCourse} userLastPurchase={userLastPurchase} user={userCourses?.user} />
       </div>
     </div>
   );
