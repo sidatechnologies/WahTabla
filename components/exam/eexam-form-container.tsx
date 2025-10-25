@@ -1,6 +1,6 @@
 "use client";
 
-import { useMcqQuestionsData } from "@/data/exams/get-mcq-exam";
+import { useEntranceMcqQuestionsData } from "@/data/exams/get-entrance-mcq-exam";
 import McqExamForm from "./exam-form";
 import { ExamFormValues } from "@/lib/validations/exam";
 import { Card, CardContent } from "@/components/ui/card";
@@ -13,16 +13,10 @@ import { McqExamResultDialog } from "./mcw-exam-result-dialog";
 
 interface ExamFormContainerProps {
   courseId: number;
-  yearId: number;
-  weekNumber: number;
-  type: string;
 }
 
 export function EntranceExamFormContainer({
   courseId,
-  yearId,
-  weekNumber,
-  type,
 }: ExamFormContainerProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -30,11 +24,8 @@ export function EntranceExamFormContainer({
     data: examResponse,
     isLoading,
     error,
-  } = useMcqQuestionsData({
+  } = useEntranceMcqQuestionsData({
     courseId,
-    yearId,
-    weekNumber,
-    type,
   });
   const {
     mutate,

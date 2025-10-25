@@ -10,7 +10,7 @@ const Page = ({
 
   return (
     <div className="w-full min-h-screen flex flex-col justify-start items-center mx-auto">
-      <EntranceExamFormContainer courseId={courseId} yearId={1} weekNumber={13} type="mcq" />
+      <EntranceExamFormContainer courseId={courseId} />
     </div>
   );
 };

@@ -3,7 +3,7 @@ import { EntranceMcqExamParams } from "@/types/exam/mcq-exam";
 import { useQuery } from "@tanstack/react-query";
 
 
-export function useMcqQuestionsData (value: EntranceMcqExamParams) {
+export function useEntranceMcqQuestionsData (value: EntranceMcqExamParams) {
     return useQuery({
         queryKey: ["getMcqQuestionsData"],
         queryFn: async () => await getEntranceMcqQuestionsData(value),
