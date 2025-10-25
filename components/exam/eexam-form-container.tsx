@@ -8,7 +8,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useState } from "react";
 import { McqExamSubmitType } from "@/types/exam/mcq-exam";
-import { useSubmitMcqExam } from "@/data/exams/submit-mcq-exam";
+import { useSubmitEntranceMcqExam } from "@/data/exams/submit-entrance-mcq-exam";
 import { McqExamResultDialog } from "./mcw-exam-result-dialog";
 
 interface ExamFormContainerProps {
@@ -33,7 +33,9 @@ export function EntranceExamFormContainer({
     showResultDialog,
     setShowResultDialog,
     examResult,
-  } = useSubmitMcqExam();
+  } = useSubmitEntranceMcqExam();
+
+  console.log({examResponse})
 
   const handleSubmit = async (data: McqExamSubmitType) => {
     setIsSubmitting(true);

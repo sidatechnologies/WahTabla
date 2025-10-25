@@ -3,7 +3,7 @@
 import { cookies } from "next/headers";
 import { decode } from "next-auth/jwt";
 import { RequestInit } from "next/dist/server/web/spec-extension/request";
-import { EntranceMcqExamParams, EntranceMcqExamResponse } from "@/types/exam/mcq-exam";
+import { McqExamSubmitServerResponse, McqExamSubmitType } from "@/types/exam/mcq-exam";
 
 const sessionTokenName =
   process.env.NODE_ENV === 'production'
@@ -12,7 +12,7 @@ const sessionTokenName =
 
 const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL ?? 'http://localhost:5842'
 
-export const getEntranceMcqQuestionsData = async (params: EntranceMcqExamParams) => {
+export const submitEntranceMcqQuestionsData = async (values: McqExamSubmitType): Promise<McqExamSubmitServerResponse> => {
 
   const cookieStore = cookies()
   const tokens = cookieStore.get(sessionTokenName)?.value ?? ''
@@ -38,33 +38,36 @@ export const getEntranceMcqQuestionsData = async (params: EntranceMcqExamParams)
   const cookieHeader = `accessToken=${accessToken}; refreshToken=${refreshToken}; Path=/; HttpOnly; Secure`;
 
   const options: RequestInit = {
-    method: "GET",
+    method: "POST",
     headers: {
       "Content-Type": "application/json",
       Cookie: cookieHeader, // Add cookies to the request
     },
     credentials: "include", // Ensure cookies are included in the request
+    body: JSON.stringify(values)
   };
   try {
 
-    const url = `${baseUrl}/exams/entrance-exam?courseId=${params.courseId}`
+    const url = `${baseUrl}/exams/emcq/submit`
+    console.log(url)
     
     const response = await fetch(url, options)
     // console.log(response.status)
-    const data = await response.json()
-    // console.log(data, response.status)
+    const responseData = await response.json()
+    // console.log(responseData, response.status)
 
     if (response.status === 200) {
-
       return {
         success: true,
-        message: 'Successfully recieved Mcq Question data',
-        data: data as EntranceMcqExamResponse
+        message: responseData.message || 'MCQ exam submitted and graded successfully',
+        data: responseData.data
       }
     } else {
-      return { success: false, message: data.message || 'MCQ Questions Fetching failed' }
+      return { 
+        success: false, 
+        message: responseData.message || 'MCQ exam submission failed' 
+      }
     }
-
 
   } catch (error) {
     console.error('Login Error:', error)
