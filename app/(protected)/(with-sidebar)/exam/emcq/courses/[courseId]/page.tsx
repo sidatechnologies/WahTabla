@@ -1,4 +1,4 @@
-import { ExamFormContainer } from "@/components/exam/exam-form-container";
+import { EntranceExamFormContainer } from "@/components/exam/eexam-form-container";
 import React from "react";
 
 const Page = ({
@@ -11,7 +11,7 @@ const Page = ({
   console.log(courseId)
   return (
     <div className="w-full min-h-screen flex flex-col justify-start items-center mx-auto">
-      <ExamFormContainer courseId={1} yearId={1} weekNumber={13} type="mcq" />
+      <EntranceExamFormContainer courseId={1} yearId={1} weekNumber={13} type="mcq" />
     </div>
   );
 };
