@@ -112,7 +112,7 @@ export function EntranceExamFormContainer({
       <McqExamForm
         examData={examResponse.data.data}
         onSubmit={handleSubmit}
-        isSubmitting={isSubmitting}
+        isSubmitting={isPending}
       />
 
       {examResult && (
