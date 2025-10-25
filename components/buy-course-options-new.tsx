@@ -145,7 +145,7 @@ const BuyingOptionsNew = ({ course, userLastPurchase, user }: propsType) => {
     const userPlanLower = user.purchasePlan.toLowerCase();
 
     const filtered = coursePricing?.priceModule.filter((p) =>
-      p.type.toLowerCase().includes(userPlanLower)
+      userPlanLower.includes(p.type.toLowerCase())
     );
 
     return filtered && filtered.length > 0 ? filtered : coursePricing?.priceModule ?? [];

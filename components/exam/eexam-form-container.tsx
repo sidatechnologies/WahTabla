@@ -35,8 +35,6 @@ export function EntranceExamFormContainer({
     examResult,
   } = useSubmitEntranceMcqExam();
 
-  console.log({examResponse})
-
   const handleSubmit = async (data: McqExamSubmitType) => {
     setIsSubmitting(true);
     try {
