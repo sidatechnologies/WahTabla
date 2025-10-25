@@ -8,10 +8,9 @@ const Page = ({
 }) => {
   const courseId = parseInt(params.courseId);
 
-  console.log(courseId)
   return (
     <div className="w-full min-h-screen flex flex-col justify-start items-center mx-auto">
-      <EntranceExamFormContainer courseId={1} yearId={1} weekNumber={13} type="mcq" />
+      <EntranceExamFormContainer courseId={courseId} yearId={1} weekNumber={13} type="mcq" />
     </div>
   );
 };
