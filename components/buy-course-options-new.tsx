@@ -8,7 +8,7 @@ import { Button } from "./ui/button";
 import Link from "next/link";
 import { pricing } from "@/data/constants/pricing-checkout";
 import { createStripeCheckoutSession } from "@/action/stripe-checkout";
-import { metadata } from "@/app/layout";
+import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
 type course = {
@@ -157,7 +157,7 @@ const BuyingOptionsNew = ({ course, userLastPurchase, user }: propsType) => {
       }
 
       const data = await response.json();
-      return data.orderId;
+      return data.id;
     } catch (error) {
       console.error('There was a problem with your fetch operation:', error);
     }
@@ -185,9 +185,9 @@ const BuyingOptionsNew = ({ course, userLastPurchase, user }: propsType) => {
               razorpayPaymentId: response.razorpay_payment_id,
               razorpayOrderId: response.razorpay_order_id,
               razorpaySignature: response.razorpay_signature,
-              amount: amount,
               metadata: {
-                courseName: courseName,
+                amount: amount,
+                course: courseName,
                 plan: plan,
                 type: type,
                 email: user?.email,
@@ -205,7 +205,7 @@ const BuyingOptionsNew = ({ course, userLastPurchase, user }: propsType) => {
             if (res.success) {
               router.push('/profile');
             } else {
-              alert(res.message);
+              toast.error(res.message);
             }
           },
           prefill: {
