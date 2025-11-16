@@ -309,22 +309,21 @@ const BuyingOptionsNew = ({ course, userLastPurchase, user }: propsType) => {
                         <span className="flex flex-col justify-center items-center text-white opacity-60">
                           <span className="line-through">
                             {
-                              country === "IN" ? "₹" : "$"
+                              country === "IN" ? `₹${priceModel.originalPriceIn / 100}` : `$${priceModel.originalPrice / 100}`
                             }
-                            {priceModel.originalPrice}
                           </span>
                           <span className="text-xs">
                             You save {
-                              country === "IN" ? "₹" : "$"
-                            } {priceModel.save}
+                              country === "IN" ? `₹${priceModel.saveIn}` : `$${priceModel.save}`
+                            }
                           </span>
                         </span>
                       )}
                       <span className="drop-shadow-3xl">
                         <span className="text-4xl font-semibold">
                           {
-                            country === "IN" ? "₹" : "$"
-                          } {priceModel.amount / 100}
+                            country === "IN" ? `₹${priceModel.amountIn / 100}` : `$${priceModel.amount / 100}`
+                          }
                         </span>
                         {priceModel.type !== "Course" && (
                           <span className="lowercase text-base">
