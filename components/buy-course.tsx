@@ -75,9 +75,17 @@ const BuyCourse = () => {
     return isCourseCompleted(previousCourse.name);
   };
 
+  if (!userCourses || !userLastPurchase) {
+    return (
+      <div className="w-full flex justify-center items-center">
+        <h1>Loading...</h1>
+      </div>
+    );
+  }
+
   return (
     <div className="w-full p-5 rounded-md h-full">
-      <div className="p-2 rounded-md bg-gradient-to-r from-white-200 to-blue-300 transition-colors duration-300 rounded-lg shadow-xl border bg-muted">
+      <div className="mb-8 p-2 rounded-md bg-gradient-to-r from-white-200 to-blue-300 transition-colors duration-300 rounded-lg shadow-xl border bg-muted">
         {/* Intro Section */}
         <div className="text-left mb-4">
           <h2 className="font-semibold text-md mb-1">Important Payment Notice</h2>
@@ -96,7 +104,7 @@ const BuyCourse = () => {
 
       </div>
       <div className="w-full flex justify-center items-center gap-6">
-        <div className="w-full flex flex-col justify-start items-start gap-2 py-10 pt-6">
+        <div className="w-full flex flex-col justify-start items-start gap-2 py-5 pt-6">
           <Label>Select Course</Label>
           <RadioGroup
             value={selectedCourse.name}
@@ -136,6 +144,8 @@ const BuyCourse = () => {
           </RadioGroup>
         </div>
       </div>
+
+
       <div>
         <BuyingOptionsNew course={selectedCourse} userLastPurchase={userLastPurchase} user={userCourses?.user} />
       </div>
